@@ -47,7 +47,7 @@ def multiple_optical_spectrum_plot(dir_name, file_names, labels, plot_range, plt
                         mark_list.append(Plotting.labs_lins[i%len(Plotting.labs_lins)]);
                     else:
                         # this will raise an exception below
-                        print("\nError: SpctrmPlt.multiple_optical_spectrum_plot()\nCould not locate:",file_names[i])
+                        print "\nError: SpctrmPlt.multiple_optical_spectrum_plot()\nCould not locate:",file_names[i]
 
                 # Need to have number of data sets equal to number of labels for plotting methods to work                
                 if len(hv_data) == len(labels):
@@ -73,12 +73,12 @@ def multiple_optical_spectrum_plot(dir_name, file_names, labels, plot_range, plt
         else:
             raise EnvironmentError
     except EnvironmentError:
-        print("\nError: SpctrmPlt.multiple_optical_spectrum_plot()")
-        print("Error: Could not find",dir_name)
+        print "\nError: SpctrmPlt.multiple_optical_spectrum_plot()"
+        print "Error: Could not find",dir_name
     except Exception:
-        print("\nError: SpctrmPlt.multiple_optical_spectrum_plot()")
-        if c1 == False: print("dir_names not assigned correctly")
-        if c2 == False: print("labels not assigned correctly")
-        if c3 == False: print("dir_names and labels have different lengths")
-        if c4 == False: print("range not assigned correctly")
-        if c5 == False: print("range does not have correct length")
+        print "\nError: SpctrmPlt.multiple_optical_spectrum_plot()"
+        if c1 == False: print "dir_names not assigned correctly"
+        if c2 == False: print "labels not assigned correctly"
+        if c3 == False: print "dir_names and labels have different lengths"
+        if c4 == False: print "range not assigned correctly"
+        if c5 == False: print "range does not have correct length"
