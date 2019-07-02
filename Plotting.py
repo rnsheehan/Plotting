@@ -187,13 +187,14 @@ def plot_single_curve(h_data, v_data, plt_args):
             plt.close()
         else:
             raise Exception
-    except Exception:
+    except Exception as e:
         print("\nError: Plotting.plot_single_curve()")
         if c1 == False: print("h_data is not defined")
         if c2 == False: print("v_data is not defined")
         if c3 == False: print("h_data has no elements")
         if c4 == False: print("v_data has no elements")
         if c5 == False: print("h_data and v_data have different lengths")
+        print(e)
 
 def log_plot_error_bars(data, error):
     # pass data using np.asarray(.)
@@ -213,8 +214,9 @@ def log_plot_error_bars(data, error):
             yerr_low = data - np.maximum(min_data_val, data-0.5*error)
             yerr_high = data + 0.5*error
             return [yerr_low, yerr_high]
-    except Exception:
+    except Exception as e:
         print("Error: Plotting.log_plot_error_bars()")
+        print(e)
 
 def plot_single_curve_with_errors(h_data, v_data, error, plt_args):
     # plot a single data set with arguments supplied by plt_args
@@ -299,7 +301,7 @@ def plot_single_curve_with_errors(h_data, v_data, error, plt_args):
             plt.close()
         else:
             raise Exception
-    except Exception:
+    except Exception as e:
         print("\nError: Plotting.plot_single_curve_with_errors()")
         if c1 == False: print("h_data is not defined")
         if c2 == False: print("v_data is not defined")
@@ -308,6 +310,7 @@ def plot_single_curve_with_errors(h_data, v_data, error, plt_args):
         if c5 == False: print("h_data and v_data have different lengths")
         if c7 == False: print("e_low has no elements")
         if c8 == False: print("error and v_data have different lengths")
+        print(e)
 
 def plot_single_linear_fit_curve(h_data, v_data, plt_args):
     # plot a linear fit on the single data set with arguments supplied by plt_args
@@ -370,13 +373,14 @@ def plot_single_linear_fit_curve(h_data, v_data, plt_args):
                 raise Exception
         else:
             raise Exception
-    except Exception:
+    except Exception as e:
         print("\nError: Plotting.plot_single_linear_fit_curve()")
         if c1 == False: print("h_data is not defined")
         if c2 == False: print("v_data is not defined")
         if c3 == False: print("h_data has no elements")
         if c4 == False: print("v_data has no elements")
         if c5 == False: print("h_data and v_data have different lengths")
+        print(e)
 
 def plot_multiple_curves(hv_data, plt_args):
     # generate plot that contains multiple curves on the same axis
@@ -438,13 +442,14 @@ def plot_multiple_curves(hv_data, plt_args):
             plt.close()
         else:
             raise Exception
-    except Exception:
+    except Exception as e:
         print("Error: Plotting.plot_multiple_curves()")
         if c1 == False: print("hv_data has not been assigned correctly")
         if c2 == False: print("plt_args.crv_lab_list has not been assigned correctly")
         if c3 == False: print("plt_args.mrk_list has not been assigned correctly")
         if c4 == False: print("hv_data and plt_args.crv_lab_list have differing numbers of elements")
         if c5 == False: print("hv_data and plt_args.mrk_list have differing numbers of elements")
+        print(e)
 
 def plot_multiple_curves_with_errors(hv_data, plt_args):
     # generate plot that contains multiple curves on the same axis
@@ -505,13 +510,14 @@ def plot_multiple_curves_with_errors(hv_data, plt_args):
             plt.close()
         else:
             raise Exception
-    except Exception:
+    except Exception as e:
         print("Error: Plotting.plot_multiple_curves()")
         if c1 == False: print("hv_data has not been assigned correctly")
         if c2 == False: print("plt_args.crv_lab_list has not been assigned correctly")
         if c3 == False: print("plt_args.mrk_list has not been assigned correctly")
         if c4 == False: print("hv_data and plt_args.crv_lab_list have differing numbers of elements")
         if c5 == False: print("hv_data and plt_args.mrk_list have differing numbers of elements")
+        print(e)
 
 def plot_multiple_linear_fit_curves(hv_data, plt_args):
     # generate plot that contains multiple linear fits to data on the same axis
@@ -587,10 +593,11 @@ def plot_multiple_linear_fit_curves(hv_data, plt_args):
             plt.close()
         else:
             raise Exception
-    except Exception:
+    except Exception as e:
         print("Error: Plotting.plot_multiple_linear_fit_curves()")
         if c1 == False: print("hv_data has not been assigned correctly")
         if c2 == False: print("plt_args.crv_lab_list has not been assigned correctly")
         #if c3 == False: print("plt_args.mrk_list has not been assigned correctly")
         if c4 == False: print("hv_data and plt_args.crv_lab_list have differing numbers of elements")
         #if c5 == False: print("hv_data and plt_args.mrk_list have differing numbers of elements")
+        print(e)
