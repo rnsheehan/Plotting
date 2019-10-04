@@ -69,6 +69,7 @@ class plot_arguments(object):
             # axis and plot labels
             self.x_label = "X (units)" # label for x-axis
             self.y_label = "Y (units)" # label for y-axis
+            self.y_label_2 = "Yalt (units)" # label for a second y-axis if required
             self.plt_title = "" # label for the plot
             self.plt_range = None # list to contain the bounds of the plot
             self.fig_name = "" # string to name the figure to be saved
@@ -380,6 +381,74 @@ def plot_single_linear_fit_curve(h_data, v_data, plt_args):
         if c3 == False: print("h_data has no elements")
         if c4 == False: print("v_data has no elements")
         if c5 == False: print("h_data and v_data have different lengths")
+        print(e)
+
+def plot_two_axis(h_data, v_data_1, v_data_2, plt_args):
+    
+    # Make a plot that includes two y_axes
+    # For notes on this type of plot see https://matplotlib.org/gallery/api/two_scales.html
+    # R. Sheehan 4 - 10 - 2019
+
+    try:
+        c1 = True if h_data is not None else False
+        c2 = True if v_data_1 is not None else False
+        c3 = True if v_data_2 is not None else False
+        c4 = True if len(h_data) > 0 else False
+        c5 = True if len(v_data_1) > 0 else False
+        c6 = True if len(v_data_2) > 0 else False
+        c7 = True if len(h_data) == len(v_data_1) else False
+        c8 = True if len(h_data) == len(v_data_2) else False
+        c10 = True if c1 and c2 and c3 and c4 and c5 else False
+
+        if c10:
+            fig, ax1 = plt.subplots()
+
+            # same x-label for both graphs
+            ax1.set_xlabel(plt_args.x_label, fontsize = 17)
+            
+            # set the colour of the ticks and labels on the 1st y-axis
+            color = 'r'
+            ax1.set_ylabel(plt_args.y_label, color=color, fontsize = 17)
+            ax1.tick_params(axis='y', labelcolor=color)
+
+            # plot the first data set
+            ax1.plot(h_data, v_data_1, 'r*', lw = plt_args.thick, ms = plt_args.msize)
+            
+            ax2 = ax1.twinx()  # instantiate a second axes that shares the same x-axis
+
+            # set the colour of the ticks and labels on the 2nd y-axis
+            color = 'b'
+            ax2.set_ylabel(plt_args.y_label_2, color=color, fontsize = 17)  # we already handled the x-label with ax1
+            ax2.tick_params(axis='y', labelcolor=color)
+
+            # plot the second data set
+            ax2.plot(h_data, v_data_2, 'b^', lw = plt_args.thick, ms = plt_args.msize)
+            
+            fig.tight_layout()  # otherwise the right y-label is slightly clipped
+
+            # add a plot title if required
+            if plt_args.plt_title is not "": plt.title(plt_args.plt_title)
+            
+            # just use default plot range
+            #if plt_args.plt_range is not None: plt.axis( plt_args.plt_range )
+
+            # plot endmatter
+            if plt_args.fig_name is not "": plt.savefig(plt_args.fig_name)
+            if plt_args.loud: plt.show()
+            plt.clf()
+            plt.cla()
+            plt.close()
+        else:
+            raise Exception
+    except Exception as e:
+        print("\nError: Plotting.plot_two_axis()")
+        if c1 == False: print("h_data is not defined")
+        if c2 == False: print("v_data_1 is not defined")
+        if c3 == False: print("v_data_2 is not defined")
+        if c4 == False: print("h_data has no elements")
+        if c5 == False: print("v_data_1 has no elements")
+        if c6 == False: print("v_data_2 has no elements")
+        if c7 == False or c8 == False: print("h_data and v_data have different lengths")
         print(e)
 
 def plot_multiple_curves(hv_data, plt_args):
