@@ -616,7 +616,12 @@ def plot_multiple_linear_fit_curves(hv_data, plt_args):
             count = 0
             for k in range(0, len(hv_data), 1):
 
-                pars = Common.linear_fit(np.asarray(hv_data[k][0]), np.asarray(hv_data[k][1]), [0, 1])
+                # sort the data set, this doesn't affect the fit in any way
+                # it just means that the line in the final plot always hits the endpoints
+                # R. Sheehan 9 - 7 - 2021
+                hv_data[k][0], hv_data[k][1] = Common.sort_two_col(hv_data[k][0], hv_data[k][1])  
+
+                pars = Common.linear_fit(np.asarray(hv_data[k][0]), np.asarray(hv_data[k][1]), [0, 1]) # perform linear fit to the data set
 
                 if pars is not None:
                     lin_x = [ hv_data[k][0][0], hv_data[k][0][-1] ]
