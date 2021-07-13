@@ -624,6 +624,9 @@ def plot_multiple_linear_fit_curves(hv_data, plt_args):
                 pars = Common.linear_fit(np.asarray(hv_data[k][0]), np.asarray(hv_data[k][1]), [0, 1]) # perform linear fit to the data set
 
                 if pars is not None:
+
+                    #print(plt_args.crv_lab_list[k]," , ",pars[0]," , ",pars[1])
+
                     lin_x = [ hv_data[k][0][0], hv_data[k][0][-1] ]
                     lin_y = [ pars[0] + pars[1]*hv_data[k][0][0], pars[0] + pars[1]*hv_data[k][0][-1] ]
 
