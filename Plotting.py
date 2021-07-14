@@ -335,6 +335,10 @@ def plot_single_linear_fit_curve(h_data, v_data, plt_args):
             pars = Common.linear_fit(np.asarray(h_data), np.asarray(v_data), [0, 1])
 
             if pars is not None:
+
+                # print the fit parameters
+                #print("Intercept: ",pars[0],", Slope: ",pars[1]); 
+
                 lin_x = [ h_data[0], h_data[-1] ]
                 lin_y = [ pars[0] + pars[1]*h_data[0], pars[0] + pars[1]*h_data[-1] ]
 
@@ -381,6 +385,109 @@ def plot_single_linear_fit_curve(h_data, v_data, plt_args):
         if c3 == False: print("h_data has no elements")
         if c4 == False: print("v_data has no elements")
         if c5 == False: print("h_data and v_data have different lengths")
+        print(e)
+
+def plot_single_linear_fit_curve_with_errors(h_data, v_data, error, plt_args):
+    # plot a single data set with arguments supplied by plt_args
+    # h_data is a list of length N
+    # v_data is a list of length N
+    # error is the difference between max and min values averaged about v_data, must have length N
+    # a linear fit is made to the data set and included in the plot
+    # plt_args is an object with multiple data members, see class plot_arg_single(plot_arguments)
+
+    # matplotlib errorbar plot documentation
+    #https://matplotlib.org/api/_as_gen/matplotlib.axes.Axes.errorbar.html
+
+    # examples
+    #https://matplotlib.org/1.2.1/examples/pylab_examples/errorbar_demo.html
+
+    # R. Sheehan 9 - 11 - 2017
+
+    # .png is the default matplotlib format
+
+    try:
+        c1 = True if h_data is not None else False
+        c2 = True if v_data is not None else False
+        c3 = True if len(h_data) > 0 else False
+        c4 = True if len(v_data) > 0 else False
+        c5 = True if len(h_data) == len(v_data) else False
+        c7 = True if len(error) > 0 else False
+        c8 = True if len(error) == len(v_data) else False
+        c6 = True if c1 and c2 and c3 and c4 and c5 and c7 and c8 else False       
+
+        if c6:
+                       
+            #if plt_args.log_y == True:
+            #    if Common.list_has_negative(v_data):
+            #        # data set contains negative values, cannot make log plot
+            #        print("Error: Plotting.plot_single_curve_with_errors()")
+            #        print("Error: Input data contains negative values => log-plot not possible")
+            #        plt_args.log_y = False
+            #        yerr = error
+            #    else:
+            #        yerr = log_plot_error_bars( np.asarray(v_data), np.asarray(error) )
+            #else:
+            #    yerr = error
+
+            yerr = error
+
+            # make the linear fit
+            pars = Common.linear_fit(np.asarray(h_data), np.asarray(v_data), [0, 1])
+
+            lin_x = [ h_data[0], h_data[-1] ]
+            lin_y = [ pars[0] + pars[1]*h_data[0], pars[0] + pars[1]*h_data[-1] ]
+
+            # make the plot
+            fig = plt.figure()
+            ax = fig.add_subplot(111)
+
+            if plt_args.curve_label is not "":
+                ax.errorbar(h_data, v_data, yerr, fmt = 'b*', lw = plt_args.thick, ms = plt_args.msize, label = plt_args.curve_label)
+                ax.legend(loc = 'best')    
+            else:
+                ax.errorbar(h_data, v_data, yerr, fmt = 'b*', lw = plt_args.thick, ms = plt_args.msize)
+                # to update this code with an error in x value plot
+                #ax.errorbar(h_data, v_data, y_error, x_error, fmt = plt_args.marker, lw = plt_args.thick, ms = plt_args.msize)
+
+            ax.plot(lin_x, lin_y, 'b-', lw = plt_args.thick)
+            
+            # for more on set_yscale see https://matplotlib.org/api/_as_gen/matplotlib.axes.Axes.set_yscale.html
+            # Error bars with negative values will not be shown when plotted on a logarithmic axis.
+            #if plt_args.log_y: ax.set_yscale('log')
+
+            plt.xlabel(plt_args.x_label, fontsize = 17)
+            plt.ylabel(plt_args.y_label, fontsize = 17)
+
+            #if plt_args.log_y is False: plt.ticklabel_format(useOffset=False) # use this to turn off tick label scaling
+            #ax.get_xaxis().get_major_formatter().set_scientific(False)
+            # for more info on this see 
+            # https://stackoverflow.com/questions/14711655/how-to-prevent-numbers-being-changed-to-exponential-form-in-python-matplotlib-fi
+
+            # for more on yticks see 
+            # https://matplotlib.org/api/pyplot_api.html?highlight=matplotlib%20pyplot%20yticks#matplotlib.pyplot.yticks
+            if plt_args.y_tck_vals is not None and plt_args.y_tck_labs is not None:
+                plt.yticks( plt_args.y_tck_vals, plt_args.y_tck_labs)
+            
+            if plt_args.plt_title is not "": plt.title(plt_args.plt_title)
+            if plt_args.plt_range is not None: plt.axis( plt_args.plt_range )
+
+            # plot endmatter
+            if plt_args.fig_name is not "": plt.savefig(plt_args.fig_name)
+            if plt_args.loud: plt.show()
+            plt.clf()
+            plt.cla()
+            plt.close()
+        else:
+            raise Exception
+    except Exception as e:
+        print("\nError: Plotting.plot_single_curve_with_errors()")
+        if c1 == False: print("h_data is not defined")
+        if c2 == False: print("v_data is not defined")
+        if c3 == False: print("h_data has no elements")
+        if c4 == False: print("v_data has no elements")
+        if c5 == False: print("h_data and v_data have different lengths")
+        if c7 == False: print("e_low has no elements")
+        if c8 == False: print("error and v_data have different lengths")
         print(e)
 
 def plot_two_axis(h_data, v_data_1, v_data_2, plt_args):
