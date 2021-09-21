@@ -10,7 +10,7 @@ import sys # access system routines
 
 import math
 import scipy
-import numpy as np
+import numpy
 import matplotlib.pyplot as plt
 
 import Common
@@ -41,8 +41,10 @@ def multiple_optical_spectrum_plot(dir_name, file_names, labels, plot_range, plt
 
                 for i in range(0, len(file_names), 1):
                     if glob.glob(file_names[i]): # ensure that file in list exists
-                        data = Common.read_matrix(file_names[i], delim)
-                        data = Common.transpose_multi_col(data)
+                        #data = Common.read_matrix(file_names[i], delim)
+                        #data = Common.transpose_multi_col(data)
+                        # read the data from the file as it comes from the OSA
+                        data = numpy.loadtxt(file_names[i], delimiter = ',', skiprows = 3, unpack = True, max_rows = 5001)
                         hv_data.append(data); 
                         mark_list.append(Plotting.labs_lins[i%len(Plotting.labs_lins)]);
                     else:
@@ -55,7 +57,7 @@ def multiple_optical_spectrum_plot(dir_name, file_names, labels, plot_range, plt
 
                     arguments.loud = loudness
                     arguments.x_label = 'Wavelength (nm)'
-                    arguments.y_label = 'Spectral Power (dBm/0.05 nm)'
+                    arguments.y_label = 'Spectral Power (dBm/0.01 nm)'
                     arguments.plt_range = plot_range
                     arguments.crv_lab_list = labels
                     arguments.mrk_list = mark_list
@@ -75,10 +77,11 @@ def multiple_optical_spectrum_plot(dir_name, file_names, labels, plot_range, plt
     except EnvironmentError:
         print("\nError: SpctrmPlt.multiple_optical_spectrum_plot()")
         print("Error: Could not find",dir_name)
-    except Exception:
+    except Exception as e:
         print("\nError: SpctrmPlt.multiple_optical_spectrum_plot()")
         if c1 == False: print("dir_names not assigned correctly")
         if c2 == False: print("labels not assigned correctly")
         if c3 == False: print("dir_names and labels have different lengths")
         if c4 == False: print("range not assigned correctly")
         if c5 == False: print("range does not have correct length")
+        print(e)
