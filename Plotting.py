@@ -164,8 +164,8 @@ def plot_single_curve(h_data, v_data, plt_args):
             # for more on set_yscale see https://matplotlib.org/api/_as_gen/matplotlib.axes.Axes.set_yscale.html
             if plt_args.log_y: ax.set_yscale('log')
 
-            plt.xlabel(plt_args.x_label, fontsize = 17)
-            plt.ylabel(plt_args.y_label, fontsize = 17)
+            plt.xlabel(plt_args.x_label, fontsize = 16)
+            plt.ylabel(plt_args.y_label, fontsize = 16)
 
             if plt_args.log_y is False: plt.ticklabel_format(useOffset=False) # use this to turn off tick label scaling
             #ax.get_xaxis().get_major_formatter().set_scientific(False)
@@ -278,8 +278,8 @@ def plot_single_curve_with_errors(h_data, v_data, error, plt_args):
             # Error bars with negative values will not be shown when plotted on a logarithmic axis.
             if plt_args.log_y: ax.set_yscale('log')
 
-            plt.xlabel(plt_args.x_label, fontsize = 17)
-            plt.ylabel(plt_args.y_label, fontsize = 17)
+            plt.xlabel(plt_args.x_label, fontsize = 14)
+            plt.ylabel(plt_args.y_label, fontsize = 14)
 
             if plt_args.log_y is False: plt.ticklabel_format(useOffset=False) # use this to turn off tick label scaling
             #ax.get_xaxis().get_major_formatter().set_scientific(False)
@@ -352,8 +352,8 @@ def plot_single_linear_fit_curve(h_data, v_data, plt_args):
                 # for more on set_yscale see https://matplotlib.org/api/_as_gen/matplotlib.axes.Axes.set_yscale.html
                 if plt_args.log_y: ax.set_yscale('log')
 
-                plt.xlabel(plt_args.x_label, fontsize = 17)
-                plt.ylabel(plt_args.y_label, fontsize = 17)
+                plt.xlabel(plt_args.x_label, fontsize = 14)
+                plt.ylabel(plt_args.y_label, fontsize = 14)
 
                 if plt_args.log_y is False: plt.ticklabel_format(useOffset=False) # use this to turn off tick label scaling
                 #ax.get_xaxis().get_major_formatter().set_scientific(False)
@@ -455,8 +455,8 @@ def plot_single_linear_fit_curve_with_errors(h_data, v_data, error, plt_args):
             # Error bars with negative values will not be shown when plotted on a logarithmic axis.
             #if plt_args.log_y: ax.set_yscale('log')
 
-            plt.xlabel(plt_args.x_label, fontsize = 17)
-            plt.ylabel(plt_args.y_label, fontsize = 17)
+            plt.xlabel(plt_args.x_label, fontsize = 14)
+            plt.ylabel(plt_args.y_label, fontsize = 14)
 
             #if plt_args.log_y is False: plt.ticklabel_format(useOffset=False) # use this to turn off tick label scaling
             #ax.get_xaxis().get_major_formatter().set_scientific(False)
@@ -490,6 +490,37 @@ def plot_single_linear_fit_curve_with_errors(h_data, v_data, error, plt_args):
         if c8 == False: print("error and v_data have different lengths")
         print(e)
 
+def plot_histogram(the_data, plt_args):
+    # make a histogram plot of the_data
+    # no. bins used is computed automatically, no normalisation is applied
+    # plt_args is the set of arguments to be used in the plot
+    # no data processing is performed inside the method
+    # R. Sheehan 29 - 11 - 2021
+    
+    try:
+        c1 = True if the_data is not None else False
+        c2 = True if len(the_data) > 0 else False
+        c10 = True if c1 and c2 else False   
+
+        if c10:
+            plt.hist(the_data)
+            plt.xlabel(plt_args.x_label, fontsize = 14)
+            plt.ylabel(plt_args.y_label, fontsize = 14)
+
+            if plt_args.plt_title is not "": plt.title(plt_args.plt_title)            
+            if plt_args.fig_name is not "": plt.savefig(plt_args.fig_name)
+            if plt_args.loud: plt.show()
+
+            plt.clf()
+            plt.cla()
+            plt.close()
+        else:
+            raise Exception
+    except Exception as e:
+        print("\nError: Plotting.plot_histogram()")
+        if c1 == False or c2 == False: print("the_data is not defined")
+        print(e)
+
 def plot_two_axis(h_data, v_data_1, v_data_2, plt_args):
     
     # Make a plot that includes two y_axes
@@ -511,11 +542,11 @@ def plot_two_axis(h_data, v_data_1, v_data_2, plt_args):
             fig, ax1 = plt.subplots()
 
             # same x-label for both graphs
-            ax1.set_xlabel(plt_args.x_label, fontsize = 17)
+            ax1.set_xlabel(plt_args.x_label, fontsize = 14)
             
             # set the colour of the ticks and labels on the 1st y-axis
             color = 'r'
-            ax1.set_ylabel(plt_args.y_label, color=color, fontsize = 17)
+            ax1.set_ylabel(plt_args.y_label, color=color, fontsize = 14)
             ax1.tick_params(axis='y', labelcolor=color)
 
             # plot the first data set
@@ -525,7 +556,7 @@ def plot_two_axis(h_data, v_data_1, v_data_2, plt_args):
 
             # set the colour of the ticks and labels on the 2nd y-axis
             color = 'b'
-            ax2.set_ylabel(plt_args.y_label_2, color=color, fontsize = 17)  # we already handled the x-label with ax1
+            ax2.set_ylabel(plt_args.y_label_2, color=color, fontsize = 14)  # we already handled the x-label with ax1
             ax2.tick_params(axis='y', labelcolor=color)
 
             # plot the second data set
@@ -599,8 +630,8 @@ def plot_multiple_curves(hv_data, plt_args):
             
             if plt_args.log_y: ax.set_yscale('log') 
 
-            plt.xlabel(plt_args.x_label, fontsize = 17)
-            plt.ylabel(plt_args.y_label, fontsize = 17)
+            plt.xlabel(plt_args.x_label, fontsize = 14)
+            plt.ylabel(plt_args.y_label, fontsize = 14)
 
             if plt_args.log_y is False: plt.ticklabel_format(useOffset=False) # use this to turn off tick label scaling
             #ax.get_xaxis().get_major_formatter().set_scientific(False)
@@ -667,8 +698,8 @@ def plot_multiple_curves_with_errors(hv_data, plt_args):
             
             if plt_args.log_y: ax.set_yscale('log') 
 
-            plt.xlabel(plt_args.x_label, fontsize = 17)
-            plt.ylabel(plt_args.y_label, fontsize = 17)
+            plt.xlabel(plt_args.x_label, fontsize = 14)
+            plt.ylabel(plt_args.y_label, fontsize = 14)
 
             if plt_args.log_y is False: plt.ticklabel_format(useOffset=False) # use this to turn off tick label scaling
             #ax.get_xaxis().get_major_formatter().set_scientific(False)
@@ -753,8 +784,8 @@ def plot_multiple_linear_fit_curves(hv_data, plt_args):
                 
             ax.legend(loc = 'best')
 
-            plt.xlabel(plt_args.x_label, fontsize = 15)
-            plt.ylabel(plt_args.y_label, fontsize = 15)
+            plt.xlabel(plt_args.x_label, fontsize = 14)
+            plt.ylabel(plt_args.y_label, fontsize = 14)
 
             plt.ticklabel_format(useOffset=False) # use this to turn off tick label scaling
             #ax.get_xaxis().get_major_formatter().set_scientific(False)
