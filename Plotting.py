@@ -156,18 +156,34 @@ def plot_single_curve(h_data, v_data, plt_args):
             ax = fig.add_subplot(111)
 
             if plt_args.curve_label is not "":
-                ax.plot(h_data, v_data, plt_args.marker, lw = plt_args.thick, ms = plt_args.msize, label = plt_args.curve_label)
+                if plt_args.log_x and plt_args.log_y:
+                    ax.loglog(h_data, v_data, plt_args.marker, lw = plt_args.thick, ms = plt_args.msize, label = plt_args.curve_label)
+                elif plt_args.log_x and plt_args.log_y == False:
+                    ax.semilogx(h_data, v_data, plt_args.marker, lw = plt_args.thick, ms = plt_args.msize, label = plt_args.curve_label)
+                elif plt_args.log_x == False and plt_args.log_y:
+                    ax.semilogy(h_data, v_data, plt_args.marker, lw = plt_args.thick, ms = plt_args.msize, label = plt_args.curve_label)                
+                else:
+                    ax.plot(h_data, v_data, plt_args.marker, lw = plt_args.thick, ms = plt_args.msize, label = plt_args.curve_label)
                 ax.legend(loc = 'best')
             else:
-                ax.plot(h_data, v_data, plt_args.marker, lw = plt_args.thick, ms = plt_args.msize)
+                if plt_args.log_x and plt_args.log_y:
+                    ax.loglog(h_data, v_data, plt_args.marker, lw = plt_args.thick, ms = plt_args.msize)
+                elif plt_args.log_x and plt_args.log_y == False:
+                    ax.semilogx(h_data, v_data, plt_args.marker, lw = plt_args.thick, ms = plt_args.msize)
+                elif plt_args.log_x == False and plt_args.log_y:
+                    ax.semilogy(h_data, v_data, plt_args.marker, lw = plt_args.thick, ms = plt_args.msize)
+                else:
+                    ax.plot(h_data, v_data, plt_args.marker, lw = plt_args.thick, ms = plt_args.msize)
             
             # for more on set_yscale see https://matplotlib.org/api/_as_gen/matplotlib.axes.Axes.set_yscale.html
-            if plt_args.log_y: ax.set_yscale('log')
+            # https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.set_xscale.html
+            # https://matplotlib.org/stable/gallery/scales/log_demo.html#sphx-glr-gallery-scales-log-demo-py
+            #if plt_args.log_y: ax.set_yscale('log')
 
-            plt.xlabel(plt_args.x_label, fontsize = 16)
-            plt.ylabel(plt_args.y_label, fontsize = 16)
+            plt.xlabel(plt_args.x_label, fontsize = 14)
+            plt.ylabel(plt_args.y_label, fontsize = 14)
 
-            if plt_args.log_y is False: plt.ticklabel_format(useOffset=False) # use this to turn off tick label scaling
+            #if plt_args.log_y is False: plt.ticklabel_format(useOffset=False) # use this to turn off tick label scaling
             #ax.get_xaxis().get_major_formatter().set_scientific(False)
             # for more info on this see 
             # https://stackoverflow.com/questions/14711655/how-to-prevent-numbers-being-changed-to-exponential-form-in-python-matplotlib-fi
@@ -190,6 +206,58 @@ def plot_single_curve(h_data, v_data, plt_args):
             raise Exception
     except Exception as e:
         print("\nError: Plotting.plot_single_curve()")
+        if c1 == False: print("h_data is not defined")
+        if c2 == False: print("v_data is not defined")
+        if c3 == False: print("h_data has no elements")
+        if c4 == False: print("v_data has no elements")
+        if c5 == False: print("h_data and v_data have different lengths")
+        print(e)
+
+def plot_single_semilogx(h_data, v_data, plt_args):
+
+    # Generate a semilog plot of the data (h_data, y_data)
+    # where the x-axis is logarithmic
+    # R. Sheehan 3 - 3 - 2022
+
+    try:
+        c1 = True if h_data is not None else False
+        c2 = True if v_data is not None else False
+        c3 = True if len(h_data) > 0 else False
+        c4 = True if len(v_data) > 0 else False
+        c5 = True if len(h_data) == len(v_data) else False
+        c6 = True if c1 and c2 and c3 and c4 and c5 else False
+
+        if c6:
+            fig = plt.figure()
+            ax = fig.add_subplot(111)
+
+            if plt_args.curve_label is not "":
+                ax.semilogx(h_data, v_data, plt_args.marker, lw = plt_args.thick, ms = plt_args.msize, label = plt_args.curve_label)
+                ax.legend(loc = 'best')
+            else:
+                ax.semilogx(h_data, v_data, plt_args.marker, lw = plt_args.thick, ms = plt_args.msize)
+
+            plt.xlabel(plt_args.x_label, fontsize = 14)
+            plt.ylabel(plt_args.y_label, fontsize = 14)
+
+            # for more on yticks see 
+            # https://matplotlib.org/api/pyplot_api.html?highlight=matplotlib%20pyplot%20yticks#matplotlib.pyplot.yticks
+            if plt_args.y_tck_vals is not None and plt_args.y_tck_labs is not None:
+                plt.yticks( plt_args.y_tck_vals, plt_args.y_tck_labs)
+            
+            if plt_args.plt_title is not "": plt.title(plt_args.plt_title)
+            if plt_args.plt_range is not None: plt.axis( plt_args.plt_range )
+
+            # plot endmatter
+            if plt_args.fig_name is not "": plt.savefig(plt_args.fig_name)
+            if plt_args.loud: plt.show()
+            plt.clf()
+            plt.cla()
+            plt.close()
+        else:
+            raise Exception
+    except Exception as e:
+        print("\nError: Plotting.plot_single_semilogx()")
         if c1 == False: print("h_data is not defined")
         if c2 == False: print("v_data is not defined")
         if c3 == False: print("h_data has no elements")
@@ -250,21 +318,33 @@ def plot_single_curve_with_errors(h_data, v_data, error, plt_args):
             # need to adjust error bars in the case of a log-y plot 
             # must prevent negative error bar values
             
-            if plt_args.log_y == True:
-                if Common.list_has_negative(v_data):
-                    # data set contains negative values, cannot make log plot
-                    print("Error: Plotting.plot_single_curve_with_errors()")
-                    print("Error: Input data contains negative values => log-plot not possible")
-                    plt_args.log_y = False
-                    yerr = error
-                else:
-                    yerr = log_plot_error_bars( np.asarray(v_data), np.asarray(error) )
-            else:
-                yerr = error
+            #if plt_args.log_y == True:
+            #    if Common.list_has_negative(v_data):
+            #        # data set contains negative values, cannot make log plot
+            #        print("Error: Plotting.plot_single_curve_with_errors()")
+            #        print("Error: Input data contains negative values => log-plot not possible")
+            #        plt_args.log_y = False
+            #        yerr = error
+            #    else:
+            #        yerr = log_plot_error_bars( np.asarray(v_data), np.asarray(error) )
+            #else:
+            #    yerr = error
+
+            yerr = error
 
             # make the plot
             fig = plt.figure()
             ax = fig.add_subplot(111)
+
+            if plt_args.log_x and plt_args.log_y:
+                ax.set_xscale("log", nonpositive = 'clip')
+                ax.set_yscale("log", nonpositive = 'clip')
+            elif plt_args.log_x and plt_args.log_y == False:
+                ax.set_xscale("log", nonpositive = 'clip')
+            elif plt_args.log_x == False and plt_args.log_y:
+                ax.set_yscale("log", nonpositive = 'clip')
+            else:
+                pass
 
             if plt_args.curve_label is not "":
                 ax.errorbar(h_data, v_data, yerr, fmt = plt_args.marker, lw = plt_args.thick, ms = plt_args.msize, label = plt_args.curve_label)
@@ -276,12 +356,12 @@ def plot_single_curve_with_errors(h_data, v_data, error, plt_args):
             
             # for more on set_yscale see https://matplotlib.org/api/_as_gen/matplotlib.axes.Axes.set_yscale.html
             # Error bars with negative values will not be shown when plotted on a logarithmic axis.
-            if plt_args.log_y: ax.set_yscale('log')
+            #if plt_args.log_y: ax.set_yscale('log')
 
             plt.xlabel(plt_args.x_label, fontsize = 14)
             plt.ylabel(plt_args.y_label, fontsize = 14)
 
-            if plt_args.log_y is False: plt.ticklabel_format(useOffset=False) # use this to turn off tick label scaling
+            #if plt_args.log_y is False: plt.ticklabel_format(useOffset=False) # use this to turn off tick label scaling
             #ax.get_xaxis().get_major_formatter().set_scientific(False)
             # for more info on this see 
             # https://stackoverflow.com/questions/14711655/how-to-prevent-numbers-being-changed-to-exponential-form-in-python-matplotlib-fi
@@ -611,29 +691,33 @@ def plot_multiple_curves(hv_data, plt_args):
 
         if c6:
             # check that all data for plotting is positive
-            if plt_args.log_y == True:
-                for k in range(0, len(hv_data), 1):
-                    if Common.list_has_negative(hv_data[k][1]):
-                        plt_args.log_y = False
+            #if plt_args.log_y == True:
+            #    for k in range(0, len(hv_data), 1):
+            #        if Common.list_has_negative(hv_data[k][1]):
+            #            plt_args.log_y = False
 
             # make the plot
             fig = plt.figure()
             ax = fig.add_subplot(111)
 
             for k in range(0, len(hv_data), 1):
-
-                ax.plot(hv_data[k][0], hv_data[k][1], 
-                        plt_args.mrk_list[k], lw = plt_args.thick, ms = plt_args.msize, 
-                        label = plt_args.crv_lab_list[k])
+                if plt_args.log_x and plt_args.log_y:
+                    ax.loglog(hv_data[k][0], hv_data[k][1], plt_args.mrk_list[k], lw = plt_args.thick, ms = plt_args.msize, label = plt_args.crv_lab_list[k])
+                elif plt_args.log_x and plt_args.log_y == False:
+                    ax.semilogx(hv_data[k][0], hv_data[k][1], plt_args.mrk_list[k], lw = plt_args.thick, ms = plt_args.msize, label = plt_args.crv_lab_list[k])
+                elif plt_args.log_x == False and plt_args.log_y:
+                    ax.semilogy(hv_data[k][0], hv_data[k][1], plt_args.mrk_list[k], lw = plt_args.thick, ms = plt_args.msize, label = plt_args.crv_lab_list[k])
+                else:
+                    ax.plot(hv_data[k][0], hv_data[k][1], plt_args.mrk_list[k], lw = plt_args.thick, ms = plt_args.msize, label = plt_args.crv_lab_list[k])
                 
             ax.legend(loc = 'best')
             
-            if plt_args.log_y: ax.set_yscale('log') 
+            #if plt_args.log_y: ax.set_yscale('log') 
 
             plt.xlabel(plt_args.x_label, fontsize = 14)
             plt.ylabel(plt_args.y_label, fontsize = 14)
 
-            if plt_args.log_y is False: plt.ticklabel_format(useOffset=False) # use this to turn off tick label scaling
+            #if plt_args.log_y is False: plt.ticklabel_format(useOffset=False) # use this to turn off tick label scaling
             #ax.get_xaxis().get_major_formatter().set_scientific(False)
             # for more info on this see 
             # https://stackoverflow.com/questions/14711655/how-to-prevent-numbers-being-changed-to-exponential-form-in-python-matplotlib-fi
