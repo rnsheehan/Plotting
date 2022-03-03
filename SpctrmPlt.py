@@ -44,7 +44,7 @@ def multiple_optical_spectrum_plot(dir_name, file_names, labels, plot_range, plt
                         #data = Common.read_matrix(file_names[i], delim)
                         #data = Common.transpose_multi_col(data)
                         # read the data from the file as it comes from the OSA
-                        data = numpy.loadtxt(file_names[i], delimiter = ',', skiprows = 3, unpack = True, max_rows = 5001)
+                        data = numpy.loadtxt(file_names[i], delimiter = ',', skiprows = 3, unpack = True, max_rows = 2001)
                         hv_data.append(data); 
                         mark_list.append(Plotting.labs_lins[i%len(Plotting.labs_lins)]);
                     else:
