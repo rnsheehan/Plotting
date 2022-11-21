@@ -155,7 +155,7 @@ def plot_single_curve(h_data, v_data, plt_args):
             fig = plt.figure()
             ax = fig.add_subplot(111)
 
-            if plt_args.curve_label is not "":
+            if plt_args.curve_label != "":
                 if plt_args.log_x and plt_args.log_y:
                     ax.loglog(h_data, v_data, plt_args.marker, lw = plt_args.thick, ms = plt_args.msize, label = plt_args.curve_label)
                 elif plt_args.log_x and plt_args.log_y == False:
@@ -193,11 +193,11 @@ def plot_single_curve(h_data, v_data, plt_args):
             if plt_args.y_tck_vals is not None and plt_args.y_tck_labs is not None:
                 plt.yticks( plt_args.y_tck_vals, plt_args.y_tck_labs)
             
-            if plt_args.plt_title is not "": plt.title(plt_args.plt_title)
+            if plt_args.plt_title != "": plt.title(plt_args.plt_title)
             if plt_args.plt_range is not None: plt.axis( plt_args.plt_range )
 
             # plot endmatter
-            if plt_args.fig_name is not "": plt.savefig(plt_args.fig_name)
+            if plt_args.fig_name != "": plt.savefig(plt_args.fig_name)
             if plt_args.loud: plt.show()
             plt.clf()
             plt.cla()
@@ -231,7 +231,7 @@ def plot_single_semilogx(h_data, v_data, plt_args):
             fig = plt.figure()
             ax = fig.add_subplot(111)
 
-            if plt_args.curve_label is not "":
+            if plt_args.curve_label != "":
                 ax.semilogx(h_data, v_data, plt_args.marker, lw = plt_args.thick, ms = plt_args.msize, label = plt_args.curve_label)
                 ax.legend(loc = 'best')
             else:
@@ -245,11 +245,11 @@ def plot_single_semilogx(h_data, v_data, plt_args):
             if plt_args.y_tck_vals is not None and plt_args.y_tck_labs is not None:
                 plt.yticks( plt_args.y_tck_vals, plt_args.y_tck_labs)
             
-            if plt_args.plt_title is not "": plt.title(plt_args.plt_title)
+            if plt_args.plt_title != "": plt.title(plt_args.plt_title)
             if plt_args.plt_range is not None: plt.axis( plt_args.plt_range )
 
             # plot endmatter
-            if plt_args.fig_name is not "": plt.savefig(plt_args.fig_name)
+            if plt_args.fig_name != "": plt.savefig(plt_args.fig_name)
             if plt_args.loud: plt.show()
             plt.clf()
             plt.cla()
@@ -346,7 +346,7 @@ def plot_single_curve_with_errors(h_data, v_data, error, plt_args):
             else:
                 pass
 
-            if plt_args.curve_label is not "":
+            if plt_args.curve_label != "":
                 ax.errorbar(h_data, v_data, yerr, fmt = plt_args.marker, lw = plt_args.thick, ms = plt_args.msize, label = plt_args.curve_label)
                 ax.legend(loc = 'best')    
             else:
@@ -371,11 +371,11 @@ def plot_single_curve_with_errors(h_data, v_data, error, plt_args):
             if plt_args.y_tck_vals is not None and plt_args.y_tck_labs is not None:
                 plt.yticks( plt_args.y_tck_vals, plt_args.y_tck_labs)
             
-            if plt_args.plt_title is not "": plt.title(plt_args.plt_title)
+            if plt_args.plt_title != "": plt.title(plt_args.plt_title)
             if plt_args.plt_range is not None: plt.axis( plt_args.plt_range )
 
             # plot endmatter
-            if plt_args.fig_name is not "": plt.savefig(plt_args.fig_name)
+            if plt_args.fig_name != "": plt.savefig(plt_args.fig_name)
             if plt_args.loud: plt.show()
             plt.clf()
             plt.cla()
@@ -412,6 +412,7 @@ def plot_single_linear_fit_curve(h_data, v_data, plt_args):
 
         if c6:
             # make the linear fit
+            h_data, v_data = Common.sort_two_col(np.asarray(h_data), np.asarray(v_data))  
             pars = Common.linear_fit(np.asarray(h_data), np.asarray(v_data), [0, 1])
 
             if pars is not None:
@@ -421,6 +422,9 @@ def plot_single_linear_fit_curve(h_data, v_data, plt_args):
 
                 lin_x = [ h_data[0], h_data[-1] ]
                 lin_y = [ pars[0] + pars[1]*h_data[0], pars[0] + pars[1]*h_data[-1] ]
+
+                #lin_x = [ np.asarray(h_data)[0], np.asarray(h_data)[-1] ]
+                #lin_y = [ pars[0] + pars[1]*np.asarray(h_data)[0], pars[0] + pars[1]*np.asarray(h_data)[-1] ]
 
                 # make the plot
                 fig = plt.figure()
@@ -445,11 +449,11 @@ def plot_single_linear_fit_curve(h_data, v_data, plt_args):
                 if plt_args.y_tck_vals is not None and plt_args.y_tck_labs is not None:
                     plt.yticks( plt_args.y_tck_vals, plt_args.y_tck_labs)
             
-                if plt_args.plt_title is not "": plt.title(plt_args.plt_title)
+                if plt_args.plt_title != "": plt.title(plt_args.plt_title)
                 if plt_args.plt_range is not None: plt.axis( plt_args.plt_range )
 
                 # plot endmatter
-                if plt_args.fig_name is not "": plt.savefig(plt_args.fig_name)
+                if plt_args.fig_name != "": plt.savefig(plt_args.fig_name)
                 if plt_args.loud: plt.show()
                 plt.clf()
                 plt.cla()
@@ -512,6 +516,7 @@ def plot_single_linear_fit_curve_with_errors(h_data, v_data, error, plt_args):
             yerr = error
 
             # make the linear fit
+            h_data, v_data = Common.sort_two_col(np.asarray(h_data), np.asarray(v_data))
             pars = Common.linear_fit(np.asarray(h_data), np.asarray(v_data), [0, 1])
 
             lin_x = [ h_data[0], h_data[-1] ]
@@ -521,7 +526,7 @@ def plot_single_linear_fit_curve_with_errors(h_data, v_data, error, plt_args):
             fig = plt.figure()
             ax = fig.add_subplot(111)
 
-            if plt_args.curve_label is not "":
+            if plt_args.curve_label != "":
                 ax.errorbar(h_data, v_data, yerr, fmt = 'b*', lw = plt_args.thick, ms = plt_args.msize, label = plt_args.curve_label)
                 ax.legend(loc = 'best')    
             else:
@@ -548,11 +553,11 @@ def plot_single_linear_fit_curve_with_errors(h_data, v_data, error, plt_args):
             if plt_args.y_tck_vals is not None and plt_args.y_tck_labs is not None:
                 plt.yticks( plt_args.y_tck_vals, plt_args.y_tck_labs)
             
-            if plt_args.plt_title is not "": plt.title(plt_args.plt_title)
+            if plt_args.plt_title != "": plt.title(plt_args.plt_title)
             if plt_args.plt_range is not None: plt.axis( plt_args.plt_range )
 
             # plot endmatter
-            if plt_args.fig_name is not "": plt.savefig(plt_args.fig_name)
+            if plt_args.fig_name != "": plt.savefig(plt_args.fig_name)
             if plt_args.loud: plt.show()
             plt.clf()
             plt.cla()
@@ -587,8 +592,8 @@ def plot_histogram(the_data, plt_args):
             plt.xlabel(plt_args.x_label, fontsize = 14)
             plt.ylabel(plt_args.y_label, fontsize = 14)
 
-            if plt_args.plt_title is not "": plt.title(plt_args.plt_title)            
-            if plt_args.fig_name is not "": plt.savefig(plt_args.fig_name)
+            if plt_args.plt_title != "": plt.title(plt_args.plt_title)            
+            if plt_args.fig_name != "": plt.savefig(plt_args.fig_name)
             if plt_args.loud: plt.show()
 
             plt.clf()
@@ -645,13 +650,13 @@ def plot_two_axis(h_data, v_data_1, v_data_2, plt_args):
             fig.tight_layout()  # otherwise the right y-label is slightly clipped
 
             # add a plot title if required
-            if plt_args.plt_title is not "": plt.title(plt_args.plt_title)
+            if plt_args.plt_title != "": plt.title(plt_args.plt_title)
             
             # just use default plot range
             #if plt_args.plt_range is not None: plt.axis( plt_args.plt_range )
 
             # plot endmatter
-            if plt_args.fig_name is not "": plt.savefig(plt_args.fig_name)
+            if plt_args.fig_name != "": plt.savefig(plt_args.fig_name)
             if plt_args.loud: plt.show()
             plt.clf()
             plt.cla()
@@ -722,11 +727,11 @@ def plot_multiple_curves(hv_data, plt_args):
             # for more info on this see 
             # https://stackoverflow.com/questions/14711655/how-to-prevent-numbers-being-changed-to-exponential-form-in-python-matplotlib-fi
             
-            if plt_args.plt_title is not "": plt.title(plt_args.plt_title)
+            if plt_args.plt_title != "": plt.title(plt_args.plt_title)
             if plt_args.plt_range is not None: plt.axis( plt_args.plt_range )
 
             # plot endmatter
-            if plt_args.fig_name is not "": plt.savefig(plt_args.fig_name)
+            if plt_args.fig_name != "": plt.savefig(plt_args.fig_name)
             if plt_args.loud: plt.show()
             plt.clf()
             plt.cla()
@@ -790,11 +795,11 @@ def plot_multiple_curves_with_errors(hv_data, plt_args):
             # for more info on this see 
             # https://stackoverflow.com/questions/14711655/how-to-prevent-numbers-being-changed-to-exponential-form-in-python-matplotlib-fi
             
-            if plt_args.plt_title is not "": plt.title(plt_args.plt_title)
+            if plt_args.plt_title != "": plt.title(plt_args.plt_title)
             if plt_args.plt_range is not None: plt.axis( plt_args.plt_range )
 
             # plot endmatter
-            if plt_args.fig_name is not "": plt.savefig(plt_args.fig_name)
+            if plt_args.fig_name != "": plt.savefig(plt_args.fig_name)
             if plt_args.loud: plt.show()
             plt.clf()
             plt.cla()
@@ -876,7 +881,7 @@ def plot_multiple_linear_fit_curves(hv_data, plt_args):
             # for more info on this see 
             # https://stackoverflow.com/questions/14711655/how-to-prevent-numbers-being-changed-to-exponential-form-in-python-matplotlib-fi
             
-            if plt_args.plt_title is not "": plt.title(plt_args.plt_title)
+            if plt_args.plt_title != "": plt.title(plt_args.plt_title)
             if plt_args.plt_range is not None: plt.axis( plt_args.plt_range )
 
             # for more on yticks see 
@@ -885,7 +890,7 @@ def plot_multiple_linear_fit_curves(hv_data, plt_args):
                 plt.yticks( plt_args.y_tck_vals, plt_args.y_tck_labs)
 
             # plot endmatter
-            if plt_args.fig_name is not "": plt.savefig(plt_args.fig_name)
+            if plt_args.fig_name != "": plt.savefig(plt_args.fig_name)
             if plt_args.loud: plt.show()
             plt.clf()
             plt.cla()
