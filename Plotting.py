@@ -20,9 +20,14 @@ import Common
 # plot markers
 # https://matplotlib.org/api/markers_api.html
 
+# line style
+# https://matplotlib.org/2.1.2/api/_as_gen/matplotlib.pyplot.plot.html
+
 labs = ['r*-', 'g^-', 'b+-', 'md-', 'cp-', 'yh-', 'kx-' ] # plot labels
 labs_lins = ['r-', 'g-', 'b-', 'm-', 'c-', 'y-', 'k-' ] # plot labels
 labs_dashed = ['r--', 'g--', 'b--', 'm--', 'c--', 'y--', 'k--' ] # plot labels
+labs_dotted = ['r:', 'g:', 'b:', 'm:', 'c:', 'y:', 'k:' ] # plot labels
+labs_dotdash = ['r-.', 'g-.', 'b-.', 'm-.', 'c-.', 'y-.', 'k-.' ] # plot labels
 labs_pts = ['r*', 'g^', 'b+', 'md', 'cp', 'yh', 'kx' ] # plot labels
 
 labs_mrk_only = ['k*', 'k^', 'kd', 'kp'] # plot labels
