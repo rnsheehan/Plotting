@@ -80,6 +80,9 @@ class plot_arguments(object):
             self.fig_name = "" # string to name the figure to be saved
             self.loud = False # decide whether or not plot should be printed to screen
 
+            # The legend
+            self.show_leg = True
+
             # plot markers
             self.thick = 2 # line thickness
             self.msize = 10 # point size
@@ -720,7 +723,7 @@ def plot_multiple_curves(hv_data, plt_args):
                 else:
                     ax.plot(hv_data[k][0], hv_data[k][1], plt_args.mrk_list[k], lw = plt_args.thick, ms = plt_args.msize, label = plt_args.crv_lab_list[k])
                 
-            ax.legend(loc = 'best')
+            if plt_args.show_leg: ax.legend(loc = 'best')
             
             #if plt_args.log_y: ax.set_yscale('log') 
 
@@ -788,7 +791,7 @@ def plot_multiple_curves_with_errors(hv_data, plt_args):
                         fmt = plt_args.mrk_list[k], lw = plt_args.thick, ms = plt_args.msize, 
                         label = plt_args.crv_lab_list[k])
                 
-            ax.legend(loc = 'best')
+            if plt_args.show_leg: ax.legend(loc = 'best')
             
             if plt_args.log_y: ax.set_yscale('log') 
 
@@ -876,7 +879,7 @@ def plot_multiple_linear_fit_curves(hv_data, plt_args):
 
                 count = (count + 1)%len(labs_lins) # best way to step through the plt marker data
                 
-            ax.legend(loc = 'best')
+            if plt_args.show_leg: ax.legend(loc = 'best')
 
             plt.xlabel(plt_args.x_label, fontsize = 14)
             plt.ylabel(plt_args.y_label, fontsize = 14)
