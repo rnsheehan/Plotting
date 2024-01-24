@@ -619,6 +619,10 @@ def plot_two_axis(h_data, v_data_1, v_data_2, plt_args):
     # Make a plot that includes two y_axes
     # For notes on this type of plot see https://matplotlib.org/gallery/api/two_scales.html
     # R. Sheehan 4 - 10 - 2019
+    
+    # To make a plot with two x-axes see
+    # https://matplotlib.org/stable/gallery/subplots_axes_and_figures/secondary_axis.html
+    # R. Sheehan 24 - 1 - 2024
 
     try:
         c1 = True if h_data is not None else False
