@@ -696,6 +696,14 @@ def plot_multiple_curves(hv_data, plt_args):
     # plt_args is an object that contains multiple data members, see class plot_arguments(object)
     # It is assumed that plt_args.crv_lab_list and plt_args.mrk_list[k] are not empty
 
+    # I would like a method which could have multiple curves but only want a small number of the curves are to have a legend
+    # Assume that the last k < M curves in hv_data are to have a legend label
+    # See here for details on how this is implemented
+    # https://matplotlib.org/stable/gallery/text_labels_and_annotations/legend_demo.html#sphx-glr-gallery-text-labels-and-annotations-legend-demo-py
+    # I don't think I can do this in a generic manner because the legend wants you to save the lines as elements of a tuple
+    # Don't know how to do this when you don't know the size of the tuple in advance
+    # Updated R. Sheehan 25 - 1 - 2024
+
     # .png is the default matplotlib format
 
     try:
