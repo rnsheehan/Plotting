@@ -73,10 +73,13 @@ class plot_arguments(object):
         try: 
             # axis and plot labels
             self.x_label = "X (units)" # label for x-axis
+            self.x_label_2 = "Xalt (units)" # label for a second x-axis if required
             self.y_label = "Y (units)" # label for y-axis
             self.y_label_2 = "Yalt (units)" # label for a second y-axis if required
             self.plt_title = "" # label for the plot
             self.plt_range = None # list to contain the bounds of the plot
+            self.xold = None # array for holding x-axis values in the case of 2 x-axis plot
+            self.xnew = None # array for holding x-axis values in the case of 2 x-axis plot
             self.fig_name = "" # string to name the figure to be saved
             self.loud = False # decide whether or not plot should be printed to screen
 
@@ -614,7 +617,7 @@ def plot_histogram(the_data, plt_args):
         if c1 == False or c2 == False: print("the_data is not defined")
         print(e)
 
-def plot_two_axis(h_data, v_data_1, v_data_2, plt_args):
+def plot_two_y_axis(h_data, v_data_1, v_data_2, plt_args):
     
     # Make a plot that includes two y_axes
     # For notes on this type of plot see https://matplotlib.org/gallery/api/two_scales.html
@@ -684,6 +687,93 @@ def plot_two_axis(h_data, v_data_1, v_data_2, plt_args):
         if c5 == False: print("v_data_1 has no elements")
         if c6 == False: print("v_data_2 has no elements")
         if c7 == False or c8 == False: print("h_data and v_data have different lengths")
+        print(e)
+
+def plot_two_x_axis(hv_data, plt_args):
+
+    # generate a plot with two different x-axis scales
+    # https://matplotlib.org/stable/gallery/subplots_axes_and_figures/secondary_axis.html
+    # this is the standard plot_multiple_curves with a second x-axis added on top of the frame
+    # also I've removed the ability to do loglog plots, only plot log along y for simplicity
+    # R. Sheehan 25 - 1 - 2024
+
+    # this works as long as the mapping from one scale to another is linear
+    # otherwise it does not work as well as you'd like
+
+    # generate plot that contains multiple curves on the same axis
+    # It is assumed that each data set shares the same horizontal coordinates
+    # hv_data is a 2D array of size M*N
+    # data is stored row-wise in => data is accesed by subscript operation on hv_data
+    # M is the number of curves to be plotted
+    # N is the number of data points in each set
+    # plt_args is an object that contains multiple data members, see class plot_arguments(object)
+    # It is assumed that plt_args.crv_lab_list and plt_args.mrk_list[k] are not empty
+
+    # .png is the default matplotlib format
+
+    try:
+        c1 = True if hv_data is not None else False
+        c2 = True if plt_args.crv_lab_list is not None else False        
+        c3 = True if plt_args.mrk_list is not None else False
+        c4 = True if len(plt_args.crv_lab_list) == len(hv_data) else False
+        c5 = True if len(plt_args.mrk_list) == len(hv_data) else False
+        c6 = True if c1 and c2 and c3 and c4 and c5 else False
+
+        if c6:
+            
+            from matplotlib.ticker import AutoMinorLocator
+            
+            # make the plot
+            fig = plt.figure()
+            ax = fig.add_subplot(111)
+
+            for k in range(0, len(hv_data), 1):
+                if plt_args.log_x == False and plt_args.log_y:
+                    ax.semilogy(hv_data[k][0], hv_data[k][1], plt_args.mrk_list[k], lw = plt_args.thick, ms = plt_args.msize, label = plt_args.crv_lab_list[k])
+                else:
+                    ax.plot(hv_data[k][0], hv_data[k][1], plt_args.mrk_list[k], lw = plt_args.thick, ms = plt_args.msize, label = plt_args.crv_lab_list[k])
+                
+            if plt_args.show_leg: ax.legend(loc = 'best')
+            
+            plt.xlabel(plt_args.x_label, fontsize = 14)
+            plt.ylabel(plt_args.y_label, fontsize = 14)
+
+            #if plt_args.log_y is False: plt.ticklabel_format(useOffset=False) # use this to turn off tick label scaling
+            #ax.get_xaxis().get_major_formatter().set_scientific(False)
+            # for more info on this see 
+            # https://stackoverflow.com/questions/14711655/how-to-prevent-numbers-being-changed-to-exponential-form-in-python-matplotlib-fi
+            
+            if plt_args.plt_title != "": plt.title(plt_args.plt_title)
+            
+            # use the default plot range to make life easier? 
+            #if plt_args.plt_range is not None: plt.axis( plt_args.plt_range )
+
+            # Code needed to add second axis scale to frame
+            def forward(x):
+                return np.interp(x, plt_args.xold, plt_args.xnew)
+
+            def inverse(x):
+                return np.interp(x, plt_args.xnew, plt_args.xold)
+
+            secax = ax.secondary_xaxis('top', functions=(forward, inverse))
+            secax.xaxis.set_minor_locator(AutoMinorLocator())
+            secax.set_xlabel(plt_args.x_label_2)
+
+            # plot endmatter
+            if plt_args.fig_name != "": plt.savefig(plt_args.fig_name)
+            if plt_args.loud: plt.show()
+            plt.clf()
+            plt.cla()
+            plt.close()
+        else:
+            raise Exception
+    except Exception as e:
+        print("Error: Plotting.plot_multiple_curves()")
+        if c1 == False: print("hv_data has not been assigned correctly")
+        if c2 == False: print("plt_args.crv_lab_list has not been assigned correctly")
+        if c3 == False: print("plt_args.mrk_list has not been assigned correctly")
+        if c4 == False: print("hv_data and plt_args.crv_lab_list have differing numbers of elements")
+        if c5 == False: print("hv_data and plt_args.mrk_list have differing numbers of elements")
         print(e)
 
 def plot_multiple_curves(hv_data, plt_args):
