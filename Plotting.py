@@ -744,18 +744,29 @@ def plot_two_x_axis(hv_data, plt_args):
             # https://stackoverflow.com/questions/14711655/how-to-prevent-numbers-being-changed-to-exponential-form-in-python-matplotlib-fi
             
             if plt_args.plt_title != "": plt.title(plt_args.plt_title)
-            
-            # use the default plot range to make life easier? 
-            #if plt_args.plt_range is not None: plt.axis( plt_args.plt_range )
+            if plt_args.plt_range is not None: plt.axis( plt_args.plt_range )
 
             # Code needed to add second axis scale to frame
-            def forward(x):
-                return np.interp(x, plt_args.xold, plt_args.xnew)
+            #def forward(x):
+            #    return np.interp(x, plt_args.xold, plt_args.xnew)
 
-            def inverse(x):
-                return np.interp(x, plt_args.xnew, plt_args.xold)
+            #def inverse(x):
+            #    return np.interp(x, plt_args.xnew, plt_args.xold)
 
-            secax = ax.secondary_xaxis('top', functions=(forward, inverse))
+            # have to define functions to map one scale onto another
+            def fbeat2dist(x):
+                return 0.125*x; # maps fbeat onto looplength for Lf = 10km
+
+            def dist2fbeat(x):
+                return 8*x; # maps looplength onto distance for Lf = 10km
+
+            #def fbeat2dist(x):
+            #    return 0.625*x; # maps fbeat onto looplength for Lf = 50km
+
+            #def dist2fbeat(x):
+            #    return 1.6*x; # maps looplength onto distance for Lf = 50km
+
+            secax = ax.secondary_xaxis('top', functions=(fbeat2dist, dist2fbeat))
             secax.xaxis.set_minor_locator(AutoMinorLocator())
             secax.set_xlabel(plt_args.x_label_2)
 
