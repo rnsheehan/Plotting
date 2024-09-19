@@ -1,15 +1,14 @@
-﻿"""
-This module contains methods to produce several different types of plot
-There is a generic plot method that can be used to plot single curves
-The arguments to this method are passed by a class plot_arguments
-I also want the option to be able to plot multiple curves on the same figure
+﻿# This module contains methods to produce several different types of plot
+# There is a generic plot method that can be used to plot single curves
+# The arguments to this method are passed by a class plot_arguments
+# I also want the option to be able to plot multiple curves on the same figure
+# R. Sheehan 28 - 4 - 2017
 
-NO DATA FORMATTING TO BE PERFORMED INSIDE PLOTTING METHODS!!!!!
-
-R. Sheehan 28 - 4 - 2017
-"""
+# NO DATA FORMATTING TO BE PERFORMED INSIDE PLOTTING METHODS!!!!!
 
 # import pre-requisite modules
+import math
+import scipy
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -546,7 +545,7 @@ def plot_single_linear_fit_curve_with_errors(h_data, v_data, error, plt_args):
                 # to update this code with an error in x value plot
                 #ax.errorbar(h_data, v_data, y_error, x_error, fmt = plt_args.marker, lw = plt_args.thick, ms = plt_args.msize)
 
-            ax.plot(lin_x, lin_y, 'r-', lw = plt_args.thick)
+            ax.plot(lin_x, lin_y, 'b-', lw = plt_args.thick)
             
             # for more on set_yscale see https://matplotlib.org/api/_as_gen/matplotlib.axes.Axes.set_yscale.html
             # Error bars with negative values will not be shown when plotted on a logarithmic axis.
