@@ -100,6 +100,13 @@ class plot_arguments(object):
             # custom ticks are invoked by the command: plt.(x)(y)ticks( tck_vals, tck_labs)
             self.y_tck_vals = None; self.y_tck_labs = None; 
             self.x_tck_vals = None; self.x_tck_labs = None; 
+        
+            # Use matplotlib LineCollections to add lines to a plot after the fact
+            # Could also use hline and vline but this is more general
+            # https://matplotlib.org/stable/api/collections_api.html#matplotlib.collections.LineCollection
+            self.add_line = False # do you want to add a LineCollection? Usually, no. 
+            self.lcList = None # list of lines, which is just a sequence of coordinates
+            self.lcListColours = None # must have as many colours as there are lines
 
             # I'm not going to include these members as part of the class because I want all data processing
             # to be done before any plot function is called, i.e. no data processing inside a plot method!
@@ -369,6 +376,12 @@ def plot_single_curve_with_errors(h_data, v_data, error, plt_args):
             # for more on set_yscale see https://matplotlib.org/api/_as_gen/matplotlib.axes.Axes.set_yscale.html
             # Error bars with negative values will not be shown when plotted on a logarithmic axis.
             #if plt_args.log_y: ax.set_yscale('log')
+            
+            # Add a LineCollection
+            if plt_args.add_line and plt_args.lcList is not None and plt_args.lcListColours is not None:
+                from matplotlib.collections import LineCollection
+                lc = LineCollection(plt_args.lcList, color = plt_args.lcListColours, lw=2)
+                plt.gca().add_collection(lc)
 
             plt.xlabel(plt_args.x_label, fontsize = 14)
             plt.ylabel(plt_args.y_label, fontsize = 14)
@@ -689,6 +702,85 @@ def plot_two_y_axis(h_data, v_data_1, v_data_2, plt_args):
         if c6 == False: print("v_data_2 has no elements")
         if c7 == False or c8 == False: print("h_data and v_data have different lengths")
         print(e)
+        
+def plot_two_y_axis(h_data_1, v_data_1, h_data_2, v_data_2, plt_args):
+    
+    # Make a plot that includes two y_axes
+    # For notes on this type of plot see https://matplotlib.org/gallery/api/two_scales.html
+    # R. Sheehan 4 - 10 - 2019
+    
+    # To make a plot with two x-axes see
+    # https://matplotlib.org/stable/gallery/subplots_axes_and_figures/secondary_axis.html
+    # R. Sheehan 24 - 1 - 2024
+    
+    # Updated to include the possibility of two different x-axis values
+    # R. Sheehan 10 - 3 - 2025
+
+    try:
+        c1 = True if h_data_1 is not None else False
+        c11 = True if h_data_2 is not None else False
+        c2 = True if v_data_1 is not None else False
+        c3 = True if v_data_2 is not None else False
+        c4 = True if len(h_data_1) > 0 else False
+        c41 = True if len(h_data_2) > 0 else False
+        c5 = True if len(v_data_1) > 0 else False
+        c6 = True if len(v_data_2) > 0 else False
+        c7 = True if len(h_data_1) == len(v_data_1) else False
+        c8 = True if len(h_data_2) == len(v_data_2) else False
+        c10 = True if c1 and c2 and c3 and c4 and c5 and c11 and c41 else False
+
+        if c10:
+            fig, ax1 = plt.subplots()
+
+            # same x-label for both graphs
+            ax1.set_xlabel(plt_args.x_label, fontsize = 14)
+            
+            # set the colour of the ticks and labels on the 1st y-axis
+            color = 'r'
+            ax1.set_ylabel(plt_args.y_label, color=color, fontsize = 14)
+            ax1.tick_params(axis='y', labelcolor=color)
+
+            # plot the first data set
+            ax1.plot(h_data_1, v_data_1, 'r*-', lw = plt_args.thick, ms = plt_args.msize)
+            
+            ax2 = ax1.twinx()  # instantiate a second axes that shares the same x-axis
+
+            # set the colour of the ticks and labels on the 2nd y-axis
+            color = 'b'
+            ax2.set_ylabel(plt_args.y_label_2, color=color, fontsize = 14)  # we already handled the x-label with ax1
+            ax2.tick_params(axis='y', labelcolor=color)
+
+            # plot the second data set
+            ax2.plot(h_data_2, v_data_2, 'b^-', lw = plt_args.thick, ms = plt_args.msize)
+            
+            fig.tight_layout()  # otherwise the right y-label is slightly clipped
+
+            # add a plot title if required
+            if plt_args.plt_title != "": plt.title(plt_args.plt_title)
+            
+            # just use default plot range
+            #if plt_args.plt_range is not None: plt.axis( plt_args.plt_range )
+
+            # plot endmatter
+            if plt_args.fig_name != "": plt.savefig(plt_args.fig_name)
+            if plt_args.loud: plt.show()
+            plt.clf()
+            plt.cla()
+            plt.close()
+        else:
+            raise Exception
+    except Exception as e:
+        print("\nError: Plotting.plot_two_axis()")
+        if c1 == False: print("h_data_1 is not defined")
+        if c11 == False: print("h_data_2 is not defined")
+        if c2 == False: print("v_data_1 is not defined")
+        if c3 == False: print("v_data_2 is not defined")
+        if c4 == False: print("h_data has no elements")
+        if c41 == False: print("h_data_2 has no elements")
+        if c5 == False: print("v_data_1 has no elements")
+        if c6 == False: print("v_data_2 has no elements")
+        if c7 == False or c8 == False: print("h_data and v_data have different lengths")
+        print(e)
 
 def plot_two_x_axis(hv_data, plt_args):
 
@@ -899,6 +991,16 @@ def plot_multiple_curves_with_errors(hv_data, plt_args):
             # make the plot
             fig = plt.figure()
             ax = fig.add_subplot(111)
+            
+            # if plt_args.log_x and plt_args.log_y:
+            #     ax.set_xscale("log", nonpositive = 'clip')
+            #     ax.set_yscale("log", nonpositive = 'clip')
+            # elif plt_args.log_x and plt_args.log_y == False:
+            #     ax.set_xscale("log", nonpositive = 'clip')
+            # elif plt_args.log_x == False and plt_args.log_y:
+            #     ax.set_yscale("log", nonpositive = 'clip')
+            # else:
+            #     pass
 
             for k in range(0, len(hv_data), 1):
                 ax.errorbar(hv_data[k][0], hv_data[k][1], yerr = hv_data[k][2] if plt_args.log_y == False else log_plot_error_bars( np.asarray(hv_data[k][1]), np.asarray(hv_data[k][2]) ), 
@@ -908,6 +1010,8 @@ def plot_multiple_curves_with_errors(hv_data, plt_args):
             if plt_args.show_leg: ax.legend(loc = 'best')
             
             if plt_args.log_y: ax.set_yscale('log') 
+            
+            if plt_args.log_x: ax.set_xscale('log') 
 
             plt.xlabel(plt_args.x_label, fontsize = 14)
             plt.ylabel(plt_args.y_label, fontsize = 14)
