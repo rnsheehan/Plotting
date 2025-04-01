@@ -104,6 +104,7 @@ class plot_arguments(object):
             # Use matplotlib LineCollections to add lines to a plot after the fact
             # Could also use hline and vline but this is more general
             # https://matplotlib.org/stable/api/collections_api.html#matplotlib.collections.LineCollection
+            # Useful example here: https://stackoverflow.com/questions/12864294/adding-an-arbitrary-line-to-a-matplotlib-plot-in-ipython-notebook
             self.add_line = False # do you want to add a LineCollection? Usually, no. 
             self.lcList = None # list of lines, which is just a sequence of coordinates
             self.lcListColours = None # must have as many colours as there are lines
