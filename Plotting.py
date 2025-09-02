@@ -632,7 +632,7 @@ def plot_histogram(the_data, plt_args):
         if c1 == False or c2 == False: print("the_data is not defined")
         print(e)
 
-def plot_two_y_axis(h_data, v_data_1, v_data_2, plt_args):
+def plot_two_y_axis_sameX(h_data, v_data_1, v_data_2, plt_args):
     
     # Make a plot that includes two y_axes
     # For notes on this type of plot see https://matplotlib.org/gallery/api/two_scales.html
@@ -641,6 +641,9 @@ def plot_two_y_axis(h_data, v_data_1, v_data_2, plt_args):
     # To make a plot with two x-axes see
     # https://matplotlib.org/stable/gallery/subplots_axes_and_figures/secondary_axis.html
     # R. Sheehan 24 - 1 - 2024
+    
+    # Rename the method because python does not like name overloading
+    # R. Sheehan 2 - 9 - 2025
 
     try:
         c1 = True if h_data is not None else False
@@ -704,7 +707,7 @@ def plot_two_y_axis(h_data, v_data_1, v_data_2, plt_args):
         if c7 == False or c8 == False: print("h_data and v_data have different lengths")
         print(e)
         
-def plot_two_y_axis(h_data_1, v_data_1, h_data_2, v_data_2, plt_args):
+def plot_two_y_axis_diffX(h_data_1, v_data_1, h_data_2, v_data_2, plt_args):
     
     # Make a plot that includes two y_axes
     # For notes on this type of plot see https://matplotlib.org/gallery/api/two_scales.html
@@ -716,6 +719,9 @@ def plot_two_y_axis(h_data_1, v_data_1, h_data_2, v_data_2, plt_args):
     
     # Updated to include the possibility of two different x-axis values
     # R. Sheehan 10 - 3 - 2025
+    
+    # Rename the method because python does not like name overloading
+    # R. Sheehan 2 - 9 - 2025
 
     try:
         c1 = True if h_data_1 is not None else False
