@@ -100,6 +100,9 @@ class plot_arguments(object):
             # custom ticks are invoked by the command: plt.(x)(y)ticks( tck_vals, tck_labs)
             self.y_tck_vals = None; self.y_tck_labs = None; 
             self.x_tck_vals = None; self.x_tck_labs = None; 
+            
+            # histograms
+            self.bins = None # default value for no. of bins in a histogram
         
             # Use matplotlib LineCollections to add lines to a plot after the fact
             # Could also use hline and vline but this is more general
@@ -614,7 +617,7 @@ def plot_histogram(the_data, plt_args):
         c10 = True if c1 and c2 else False   
 
         if c10:
-            plt.hist(the_data)
+            plt.hist(the_data, bins = plt_args.bins )
             plt.xlabel(plt_args.x_label, fontsize = 14)
             plt.ylabel(plt_args.y_label, fontsize = 14)
 
@@ -668,7 +671,7 @@ def plot_two_y_axis_sameX(h_data, v_data_1, v_data_2, plt_args):
             ax1.tick_params(axis='y', labelcolor=color)
 
             # plot the first data set
-            ax1.plot(h_data, v_data_1, 'r*', lw = plt_args.thick, ms = plt_args.msize)
+            ax1.plot(h_data, v_data_1, 'r-', lw = plt_args.thick, ms = plt_args.msize)
             
             ax2 = ax1.twinx()  # instantiate a second axes that shares the same x-axis
 
@@ -678,7 +681,7 @@ def plot_two_y_axis_sameX(h_data, v_data_1, v_data_2, plt_args):
             ax2.tick_params(axis='y', labelcolor=color)
 
             # plot the second data set
-            ax2.plot(h_data, v_data_2, 'b^', lw = plt_args.thick, ms = plt_args.msize)
+            ax2.plot(h_data, v_data_2, 'b-', lw = plt_args.thick, ms = plt_args.msize)
             
             fig.tight_layout()  # otherwise the right y-label is slightly clipped
 
@@ -707,7 +710,11 @@ def plot_two_y_axis_sameX(h_data, v_data_1, v_data_2, plt_args):
         if c7 == False or c8 == False: print("h_data and v_data have different lengths")
         print(e)
         
+<<<<<<< Updated upstream
 def plot_two_y_axis_diffX(h_data_1, v_data_1, h_data_2, v_data_2, plt_args):
+=======
+def plot_two_y_axis_alt(h_data_1, v_data_1, h_data_2, v_data_2, plt_args):
+>>>>>>> Stashed changes
     
     # Make a plot that includes two y_axes
     # For notes on this type of plot see https://matplotlib.org/gallery/api/two_scales.html
@@ -720,8 +727,13 @@ def plot_two_y_axis_diffX(h_data_1, v_data_1, h_data_2, v_data_2, plt_args):
     # Updated to include the possibility of two different x-axis values
     # R. Sheehan 10 - 3 - 2025
     
+<<<<<<< Updated upstream
     # Rename the method because python does not like name overloading
     # R. Sheehan 2 - 9 - 2025
+=======
+    # Must give this a different name as Python doesn't like overloading
+    # R. Sheehan 22 - 8 - 2025
+>>>>>>> Stashed changes
 
     try:
         c1 = True if h_data_1 is not None else False
@@ -748,7 +760,7 @@ def plot_two_y_axis_diffX(h_data_1, v_data_1, h_data_2, v_data_2, plt_args):
             ax1.tick_params(axis='y', labelcolor=color)
 
             # plot the first data set
-            ax1.plot(h_data_1, v_data_1, 'r*-', lw = plt_args.thick, ms = plt_args.msize)
+            ax1.plot(h_data_1, v_data_1, 'r-', lw = plt_args.thick, ms = plt_args.msize)
             
             ax2 = ax1.twinx()  # instantiate a second axes that shares the same x-axis
 
@@ -758,7 +770,7 @@ def plot_two_y_axis_diffX(h_data_1, v_data_1, h_data_2, v_data_2, plt_args):
             ax2.tick_params(axis='y', labelcolor=color)
 
             # plot the second data set
-            ax2.plot(h_data_2, v_data_2, 'b^-', lw = plt_args.thick, ms = plt_args.msize)
+            ax2.plot(h_data_2, v_data_2, 'b-', lw = plt_args.thick, ms = plt_args.msize)
             
             fig.tight_layout()  # otherwise the right y-label is slightly clipped
 
