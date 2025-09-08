@@ -710,11 +710,7 @@ def plot_two_y_axis_sameX(h_data, v_data_1, v_data_2, plt_args):
         if c7 == False or c8 == False: print("h_data and v_data have different lengths")
         print(e)
         
-<<<<<<< Updated upstream
 def plot_two_y_axis_diffX(h_data_1, v_data_1, h_data_2, v_data_2, plt_args):
-=======
-def plot_two_y_axis_alt(h_data_1, v_data_1, h_data_2, v_data_2, plt_args):
->>>>>>> Stashed changes
     
     # Make a plot that includes two y_axes
     # For notes on this type of plot see https://matplotlib.org/gallery/api/two_scales.html
@@ -727,13 +723,8 @@ def plot_two_y_axis_alt(h_data_1, v_data_1, h_data_2, v_data_2, plt_args):
     # Updated to include the possibility of two different x-axis values
     # R. Sheehan 10 - 3 - 2025
     
-<<<<<<< Updated upstream
-    # Rename the method because python does not like name overloading
-    # R. Sheehan 2 - 9 - 2025
-=======
     # Must give this a different name as Python doesn't like overloading
     # R. Sheehan 22 - 8 - 2025
->>>>>>> Stashed changes
 
     try:
         c1 = True if h_data_1 is not None else False
