@@ -556,14 +556,14 @@ def plot_single_linear_fit_curve_with_errors(h_data, v_data, error, plt_args):
             ax = fig.add_subplot(111)
 
             if plt_args.curve_label != "":
-                ax.errorbar(h_data, v_data, yerr, fmt = 'b*', lw = plt_args.thick, ms = plt_args.msize, label = plt_args.curve_label)
+                ax.errorbar(h_data, v_data, yerr, fmt = 'r*', lw = plt_args.thick, ms = plt_args.msize, label = plt_args.curve_label)
                 ax.legend(loc = 'best')    
             else:
-                ax.errorbar(h_data, v_data, yerr, fmt = 'b*', lw = plt_args.thick, ms = plt_args.msize)
+                ax.errorbar(h_data, v_data, yerr, fmt = 'r*', lw = plt_args.thick, ms = plt_args.msize)
                 # to update this code with an error in x value plot
                 #ax.errorbar(h_data, v_data, y_error, x_error, fmt = plt_args.marker, lw = plt_args.thick, ms = plt_args.msize)
 
-            ax.plot(lin_x, lin_y, 'r-', lw = plt_args.thick)
+            ax.plot(lin_x, lin_y, 'b-', lw = plt_args.thick)
             
             # for more on set_yscale see https://matplotlib.org/api/_as_gen/matplotlib.axes.Axes.set_yscale.html
             # Error bars with negative values will not be shown when plotted on a logarithmic axis.
