@@ -459,8 +459,8 @@ def plot_single_linear_fit_curve(h_data, v_data, plt_args):
                 fig = plt.figure()
                 ax = fig.add_subplot(111)
                 
-                ax.plot(lin_x, lin_y, 'r-', lw = plt_args.thick)
-                ax.plot(h_data, v_data, 'b*', ms = plt_args.msize)
+                ax.plot(lin_x, lin_y, 'b-', lw = plt_args.thick)
+                ax.plot(h_data, v_data, 'r*', ms = plt_args.msize)
             
                 # for more on set_yscale see https://matplotlib.org/api/_as_gen/matplotlib.axes.Axes.set_yscale.html
                 if plt_args.log_y: ax.set_yscale('log')
