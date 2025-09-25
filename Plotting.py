@@ -184,7 +184,7 @@ def plot_single_curve(h_data, v_data, plt_args):
             fig = plt.figure()
             ax = fig.add_subplot(111)
 
-            if plt_args.curve_label != "":
+            if plt_args.curve_label is not "":
                 if plt_args.log_x and plt_args.log_y:
                     ax.loglog(h_data, v_data, plt_args.marker, lw = plt_args.thick, ms = plt_args.msize, label = plt_args.curve_label)
                 elif plt_args.log_x and plt_args.log_y == False:
@@ -260,7 +260,7 @@ def plot_single_semilogx(h_data, v_data, plt_args):
             fig = plt.figure()
             ax = fig.add_subplot(111)
 
-            if plt_args.curve_label != "":
+            if plt_args.curve_label is not "":
                 ax.semilogx(h_data, v_data, plt_args.marker, lw = plt_args.thick, ms = plt_args.msize, label = plt_args.curve_label)
                 ax.legend(loc = 'best')
             else:
@@ -375,7 +375,7 @@ def plot_single_curve_with_errors(h_data, v_data, error, plt_args):
             else:
                 pass
 
-            if plt_args.curve_label != "":
+            if plt_args.curve_label is not "":
                 ax.errorbar(h_data, v_data, yerr, fmt = plt_args.marker, lw = plt_args.thick, ms = plt_args.msize, label = plt_args.curve_label)
                 ax.legend(loc = 'best')    
             else:
@@ -561,7 +561,7 @@ def plot_single_linear_fit_curve_with_errors(h_data, v_data, error, plt_args):
             fig = plt.figure()
             ax = fig.add_subplot(111)
 
-            if plt_args.curve_label != "":
+            if plt_args.curve_label is not "":
                 ax.errorbar(h_data, v_data, yerr, fmt = 'r*', lw = plt_args.thick, ms = plt_args.msize, label = plt_args.curve_label)
                 ax.legend(loc = 'best')    
             else:
