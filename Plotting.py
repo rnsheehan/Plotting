@@ -64,6 +64,11 @@ labs_line_only = ['k-', 'k--', 'k:', 'k-.'] # plot labels
 # It looks like python knows that the type should be since I given the data member a default argument in constructor
 # A general Exception is raised when an attempt is made to assign a member to a type that differs from the default value
 
+# LineCollection - a simple way to add lines to an existing plot without having to add extra data sets
+# https://matplotlib.org/3.5.3/gallery/shapes_and_collections/line_collection.html
+# https://matplotlib.org/stable/gallery/shapes_and_collections/line_collection.html
+# https://stackoverflow.com/questions/60266750/horizontal-lines-with-linecollection-in-matplotlib
+
 class plot_arguments(object):
     # this is the base class for the derived classes plot_arg_single and plot_arg_multiple
     # is there anyway to prevent this class from being used? 
@@ -111,6 +116,7 @@ class plot_arguments(object):
             self.add_line = False # do you want to add a LineCollection? Usually, no. 
             self.lcList = None # list of lines, which is just a sequence of coordinates
             self.lcListColours = None # must have as many colours as there are lines
+            self.lcListStyle = None # must have as many line-styles as there are lines
 
             # I'm not going to include these members as part of the class because I want all data processing
             # to be done before any plot function is called, i.e. no data processing inside a plot method!
@@ -945,6 +951,12 @@ def plot_multiple_curves(hv_data, plt_args):
 
             plt.xlabel(plt_args.x_label, fontsize = 14)
             plt.ylabel(plt_args.y_label, fontsize = 14)
+            
+            # Add a LineCollection
+            if plt_args.add_line and plt_args.lcList is not None and plt_args.lcListColours is not None:
+                from matplotlib.collections import LineCollection
+                lc = LineCollection(plt_args.lcList, color = plt_args.lcListColours, lw=2, linestyles = plt_args.lcListStyle if plt_args.lcListStyle is not None else 'solid')
+                plt.gca().add_collection(lc)
 
             #if plt_args.log_y is False: plt.ticklabel_format(useOffset=False) # use this to turn off tick label scaling
             #ax.get_xaxis().get_major_formatter().set_scientific(False)
@@ -1022,6 +1034,12 @@ def plot_multiple_curves_with_errors(hv_data, plt_args):
             if plt_args.log_y: ax.set_yscale('log') 
             
             if plt_args.log_x: ax.set_xscale('log') 
+            
+            # Add a LineCollection
+            if plt_args.add_line and plt_args.lcList is not None and plt_args.lcListColours is not None:
+                from matplotlib.collections import LineCollection
+                lc = LineCollection(plt_args.lcList, color = plt_args.lcListColours, lw=2, linestyles = plt_args.lcListStyle if plt_args.lcListStyle is not None else 'solid')
+                plt.gca().add_collection(lc)
 
             plt.xlabel(plt_args.x_label, fontsize = 14)
             plt.ylabel(plt_args.y_label, fontsize = 14)
