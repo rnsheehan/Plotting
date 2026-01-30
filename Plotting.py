@@ -17,6 +17,7 @@ import Common
 
 # colors = [red - r, green - g, blue - b, magenta - m, cyan - c, yellow - y, black - k]
 # https://matplotlib.org/api/colors_api.html
+colours = ['r', 'g', 'b', 'm', 'c', 'y', 'k']
 
 # plot markers
 # https://matplotlib.org/api/markers_api.html
