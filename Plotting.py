@@ -173,8 +173,8 @@ def plot_single_curve(h_data, v_data, plt_args):
     # .png is the default matplotlib format
 
     try:
-        c1 = True if h_data is not None else False
-        c2 = True if v_data is not None else False
+        c1 = True if h_data != None else False
+        c2 = True if v_data != None else False
         c3 = True if len(h_data) > 0 else False
         c4 = True if len(v_data) > 0 else False
         c5 = True if len(h_data) == len(v_data) else False
@@ -185,7 +185,7 @@ def plot_single_curve(h_data, v_data, plt_args):
             fig = plt.figure()
             ax = fig.add_subplot(111)
 
-            if plt_args.curve_label is not "":
+            if plt_args.curve_label != "":
                 if plt_args.log_x and plt_args.log_y:
                     ax.loglog(h_data, v_data, plt_args.marker, lw = plt_args.thick, ms = plt_args.msize, label = plt_args.curve_label)
                 elif plt_args.log_x and plt_args.log_y == False:
@@ -220,11 +220,11 @@ def plot_single_curve(h_data, v_data, plt_args):
 
             # for more on yticks see 
             # https://matplotlib.org/api/pyplot_api.html?highlight=matplotlib%20pyplot%20yticks#matplotlib.pyplot.yticks
-            if plt_args.y_tck_vals is not None and plt_args.y_tck_labs is not None:
+            if plt_args.y_tck_vals != None and plt_args.y_tck_labs != None:
                 plt.yticks( plt_args.y_tck_vals, plt_args.y_tck_labs)
             
             if plt_args.plt_title != "": plt.title(plt_args.plt_title)
-            if plt_args.plt_range is not None: plt.axis( plt_args.plt_range )
+            if plt_args.plt_range != None: plt.axis( plt_args.plt_range )
 
             # plot endmatter
             if plt_args.fig_name != "": plt.savefig(plt_args.fig_name)
@@ -236,8 +236,8 @@ def plot_single_curve(h_data, v_data, plt_args):
             raise Exception
     except Exception as e:
         print("\nError: Plotting.plot_single_curve()")
-        if c1 == False: print("h_data is not defined")
-        if c2 == False: print("v_data is not defined")
+        if c1 == False: print("h_data != defined")
+        if c2 == False: print("v_data != defined")
         if c3 == False: print("h_data has no elements")
         if c4 == False: print("v_data has no elements")
         if c5 == False: print("h_data and v_data have different lengths")
@@ -250,8 +250,8 @@ def plot_single_semilogx(h_data, v_data, plt_args):
     # R. Sheehan 3 - 3 - 2022
 
     try:
-        c1 = True if h_data is not None else False
-        c2 = True if v_data is not None else False
+        c1 = True if h_data != None else False
+        c2 = True if v_data != None else False
         c3 = True if len(h_data) > 0 else False
         c4 = True if len(v_data) > 0 else False
         c5 = True if len(h_data) == len(v_data) else False
@@ -261,7 +261,7 @@ def plot_single_semilogx(h_data, v_data, plt_args):
             fig = plt.figure()
             ax = fig.add_subplot(111)
 
-            if plt_args.curve_label is not "":
+            if plt_args.curve_label != "":
                 ax.semilogx(h_data, v_data, plt_args.marker, lw = plt_args.thick, ms = plt_args.msize, label = plt_args.curve_label)
                 ax.legend(loc = 'best')
             else:
@@ -272,11 +272,11 @@ def plot_single_semilogx(h_data, v_data, plt_args):
 
             # for more on yticks see 
             # https://matplotlib.org/api/pyplot_api.html?highlight=matplotlib%20pyplot%20yticks#matplotlib.pyplot.yticks
-            if plt_args.y_tck_vals is not None and plt_args.y_tck_labs is not None:
+            if plt_args.y_tck_vals != None and plt_args.y_tck_labs != None:
                 plt.yticks( plt_args.y_tck_vals, plt_args.y_tck_labs)
             
             if plt_args.plt_title != "": plt.title(plt_args.plt_title)
-            if plt_args.plt_range is not None: plt.axis( plt_args.plt_range )
+            if plt_args.plt_range != None: plt.axis( plt_args.plt_range )
 
             # plot endmatter
             if plt_args.fig_name != "": plt.savefig(plt_args.fig_name)
@@ -288,8 +288,8 @@ def plot_single_semilogx(h_data, v_data, plt_args):
             raise Exception
     except Exception as e:
         print("\nError: Plotting.plot_single_semilogx()")
-        if c1 == False: print("h_data is not defined")
-        if c2 == False: print("v_data is not defined")
+        if c1 == False: print("h_data != defined")
+        if c2 == False: print("v_data != defined")
         if c3 == False: print("h_data has no elements")
         if c4 == False: print("v_data has no elements")
         if c5 == False: print("h_data and v_data have different lengths")
@@ -335,8 +335,8 @@ def plot_single_curve_with_errors(h_data, v_data, error, plt_args):
     # .png is the default matplotlib format
 
     try:
-        c1 = True if h_data is not None else False
-        c2 = True if v_data is not None else False
+        c1 = True if h_data != None else False
+        c2 = True if v_data != None else False
         c3 = True if len(h_data) > 0 else False
         c4 = True if len(v_data) > 0 else False
         c5 = True if len(h_data) == len(v_data) else False
@@ -376,7 +376,7 @@ def plot_single_curve_with_errors(h_data, v_data, error, plt_args):
             else:
                 pass
 
-            if plt_args.curve_label is not "":
+            if plt_args.curve_label != "":
                 ax.errorbar(h_data, v_data, yerr, fmt = plt_args.marker, lw = plt_args.thick, ms = plt_args.msize, label = plt_args.curve_label)
                 ax.legend(loc = 'best')    
             else:
@@ -389,7 +389,7 @@ def plot_single_curve_with_errors(h_data, v_data, error, plt_args):
             #if plt_args.log_y: ax.set_yscale('log')
             
             # Add a LineCollection
-            if plt_args.add_line and plt_args.lcList is not None and plt_args.lcListColours is not None:
+            if plt_args.add_line and plt_args.lcList != None and plt_args.lcListColours != None:
                 from matplotlib.collections import LineCollection
                 lc = LineCollection(plt_args.lcList, color = plt_args.lcListColours, lw=2)
                 plt.gca().add_collection(lc)
@@ -404,11 +404,11 @@ def plot_single_curve_with_errors(h_data, v_data, error, plt_args):
 
             # for more on yticks see 
             # https://matplotlib.org/api/pyplot_api.html?highlight=matplotlib%20pyplot%20yticks#matplotlib.pyplot.yticks
-            if plt_args.y_tck_vals is not None and plt_args.y_tck_labs is not None:
+            if plt_args.y_tck_vals != None and plt_args.y_tck_labs != None:
                 plt.yticks( plt_args.y_tck_vals, plt_args.y_tck_labs)
             
             if plt_args.plt_title != "": plt.title(plt_args.plt_title)
-            if plt_args.plt_range is not None: plt.axis( plt_args.plt_range )
+            if plt_args.plt_range != None: plt.axis( plt_args.plt_range )
 
             # plot endmatter
             if plt_args.fig_name != "": plt.savefig(plt_args.fig_name)
@@ -420,8 +420,8 @@ def plot_single_curve_with_errors(h_data, v_data, error, plt_args):
             raise Exception
     except Exception as e:
         print("\nError: Plotting.plot_single_curve_with_errors()")
-        if c1 == False: print("h_data is not defined")
-        if c2 == False: print("v_data is not defined")
+        if c1 == False: print("h_data != defined")
+        if c2 == False: print("v_data != defined")
         if c3 == False: print("h_data has no elements")
         if c4 == False: print("v_data has no elements")
         if c5 == False: print("h_data and v_data have different lengths")
@@ -439,8 +439,8 @@ def plot_single_linear_fit_curve(h_data, v_data, plt_args):
     # .png is the default matplotlib format
 
     try:
-        c1 = True if h_data is not None else False
-        c2 = True if v_data is not None else False
+        c1 = True if h_data != None else False
+        c2 = True if v_data != None else False
         c3 = True if len(h_data) > 0 else False
         c4 = True if len(v_data) > 0 else False
         c5 = True if len(h_data) == len(v_data) else False
@@ -451,7 +451,7 @@ def plot_single_linear_fit_curve(h_data, v_data, plt_args):
             h_data, v_data = Common.sort_two_col(np.asarray(h_data), np.asarray(v_data))  
             pars = Common.linear_fit(np.asarray(h_data), np.asarray(v_data), [0, 1])
 
-            if pars is not None:
+            if pars != None:
 
                 # print the fit parameters
                 #print("Intercept: ",pars[0],", Slope: ",pars[1]); 
@@ -482,11 +482,11 @@ def plot_single_linear_fit_curve(h_data, v_data, plt_args):
 
                 # for more on yticks see 
                 # https://matplotlib.org/api/pyplot_api.html?highlight=matplotlib%20pyplot%20yticks#matplotlib.pyplot.yticks
-                if plt_args.y_tck_vals is not None and plt_args.y_tck_labs is not None:
+                if plt_args.y_tck_vals != None and plt_args.y_tck_labs != None:
                     plt.yticks( plt_args.y_tck_vals, plt_args.y_tck_labs)
             
                 if plt_args.plt_title != "": plt.title(plt_args.plt_title)
-                if plt_args.plt_range is not None: plt.axis( plt_args.plt_range )
+                if plt_args.plt_range != None: plt.axis( plt_args.plt_range )
 
                 # plot endmatter
                 if plt_args.fig_name != "": plt.savefig(plt_args.fig_name)
@@ -500,8 +500,8 @@ def plot_single_linear_fit_curve(h_data, v_data, plt_args):
             raise Exception
     except Exception as e:
         print("\nError: Plotting.plot_single_linear_fit_curve()")
-        if c1 == False: print("h_data is not defined")
-        if c2 == False: print("v_data is not defined")
+        if c1 == False: print("h_data != defined")
+        if c2 == False: print("v_data != defined")
         if c3 == False: print("h_data has no elements")
         if c4 == False: print("v_data has no elements")
         if c5 == False: print("h_data and v_data have different lengths")
@@ -526,8 +526,8 @@ def plot_single_linear_fit_curve_with_errors(h_data, v_data, error, plt_args):
     # .png is the default matplotlib format
 
     try:
-        c1 = True if h_data is not None else False
-        c2 = True if v_data is not None else False
+        c1 = True if h_data != None else False
+        c2 = True if v_data != None else False
         c3 = True if len(h_data) > 0 else False
         c4 = True if len(v_data) > 0 else False
         c5 = True if len(h_data) == len(v_data) else False
@@ -562,7 +562,7 @@ def plot_single_linear_fit_curve_with_errors(h_data, v_data, error, plt_args):
             fig = plt.figure()
             ax = fig.add_subplot(111)
 
-            if plt_args.curve_label is not "":
+            if plt_args.curve_label != "":
                 ax.errorbar(h_data, v_data, yerr, fmt = 'r*', lw = plt_args.thick, ms = plt_args.msize, label = plt_args.curve_label)
                 ax.legend(loc = 'best')    
             else:
@@ -586,11 +586,11 @@ def plot_single_linear_fit_curve_with_errors(h_data, v_data, error, plt_args):
 
             # for more on yticks see 
             # https://matplotlib.org/api/pyplot_api.html?highlight=matplotlib%20pyplot%20yticks#matplotlib.pyplot.yticks
-            if plt_args.y_tck_vals is not None and plt_args.y_tck_labs is not None:
+            if plt_args.y_tck_vals != None and plt_args.y_tck_labs != None:
                 plt.yticks( plt_args.y_tck_vals, plt_args.y_tck_labs)
             
             if plt_args.plt_title != "": plt.title(plt_args.plt_title)
-            if plt_args.plt_range is not None: plt.axis( plt_args.plt_range )
+            if plt_args.plt_range != None: plt.axis( plt_args.plt_range )
 
             # plot endmatter
             if plt_args.fig_name != "": plt.savefig(plt_args.fig_name)
@@ -602,8 +602,8 @@ def plot_single_linear_fit_curve_with_errors(h_data, v_data, error, plt_args):
             raise Exception
     except Exception as e:
         print("\nError: Plotting.plot_single_curve_with_errors()")
-        if c1 == False: print("h_data is not defined")
-        if c2 == False: print("v_data is not defined")
+        if c1 == False: print("h_data != defined")
+        if c2 == False: print("v_data != defined")
         if c3 == False: print("h_data has no elements")
         if c4 == False: print("v_data has no elements")
         if c5 == False: print("h_data and v_data have different lengths")
@@ -619,7 +619,7 @@ def plot_histogram(the_data, plt_args):
     # R. Sheehan 29 - 11 - 2021
     
     try:
-        c1 = True if the_data is not None else False
+        c1 = True if the_data != None else False
         c2 = True if len(the_data) > 0 else False
         c10 = True if c1 and c2 else False   
 
@@ -639,7 +639,7 @@ def plot_histogram(the_data, plt_args):
             raise Exception
     except Exception as e:
         print("\nError: Plotting.plot_histogram()")
-        if c1 == False or c2 == False: print("the_data is not defined")
+        if c1 == False or c2 == False: print("the_data != defined")
         print(e)
 
 def plot_two_y_axis_sameX(h_data, v_data_1, v_data_2, plt_args):
@@ -656,9 +656,9 @@ def plot_two_y_axis_sameX(h_data, v_data_1, v_data_2, plt_args):
     # R. Sheehan 2 - 9 - 2025
 
     try:
-        c1 = True if h_data is not None else False
-        c2 = True if v_data_1 is not None else False
-        c3 = True if v_data_2 is not None else False
+        c1 = True if h_data != None else False
+        c2 = True if v_data_1 != None else False
+        c3 = True if v_data_2 != None else False
         c4 = True if len(h_data) > 0 else False
         c5 = True if len(v_data_1) > 0 else False
         c6 = True if len(v_data_2) > 0 else False
@@ -696,7 +696,7 @@ def plot_two_y_axis_sameX(h_data, v_data_1, v_data_2, plt_args):
             if plt_args.plt_title != "": plt.title(plt_args.plt_title)
             
             # just use default plot range
-            #if plt_args.plt_range is not None: plt.axis( plt_args.plt_range )
+            #if plt_args.plt_range != None: plt.axis( plt_args.plt_range )
 
             # plot endmatter
             if plt_args.fig_name != "": plt.savefig(plt_args.fig_name)
@@ -708,9 +708,9 @@ def plot_two_y_axis_sameX(h_data, v_data_1, v_data_2, plt_args):
             raise Exception
     except Exception as e:
         print("\nError: Plotting.plot_two_axis()")
-        if c1 == False: print("h_data is not defined")
-        if c2 == False: print("v_data_1 is not defined")
-        if c3 == False: print("v_data_2 is not defined")
+        if c1 == False: print("h_data != defined")
+        if c2 == False: print("v_data_1 != defined")
+        if c3 == False: print("v_data_2 != defined")
         if c4 == False: print("h_data has no elements")
         if c5 == False: print("v_data_1 has no elements")
         if c6 == False: print("v_data_2 has no elements")
@@ -734,10 +734,10 @@ def plot_two_y_axis_diffX(h_data_1, v_data_1, h_data_2, v_data_2, plt_args):
     # R. Sheehan 22 - 8 - 2025
 
     try:
-        c1 = True if h_data_1 is not None else False
-        c11 = True if h_data_2 is not None else False
-        c2 = True if v_data_1 is not None else False
-        c3 = True if v_data_2 is not None else False
+        c1 = True if h_data_1 != None else False
+        c11 = True if h_data_2 != None else False
+        c2 = True if v_data_1 != None else False
+        c3 = True if v_data_2 != None else False
         c4 = True if len(h_data_1) > 0 else False
         c41 = True if len(h_data_2) > 0 else False
         c5 = True if len(v_data_1) > 0 else False
@@ -776,7 +776,7 @@ def plot_two_y_axis_diffX(h_data_1, v_data_1, h_data_2, v_data_2, plt_args):
             if plt_args.plt_title != "": plt.title(plt_args.plt_title)
             
             # just use default plot range
-            #if plt_args.plt_range is not None: plt.axis( plt_args.plt_range )
+            #if plt_args.plt_range != None: plt.axis( plt_args.plt_range )
 
             # plot endmatter
             if plt_args.fig_name != "": plt.savefig(plt_args.fig_name)
@@ -788,10 +788,10 @@ def plot_two_y_axis_diffX(h_data_1, v_data_1, h_data_2, v_data_2, plt_args):
             raise Exception
     except Exception as e:
         print("\nError: Plotting.plot_two_axis()")
-        if c1 == False: print("h_data_1 is not defined")
-        if c11 == False: print("h_data_2 is not defined")
-        if c2 == False: print("v_data_1 is not defined")
-        if c3 == False: print("v_data_2 is not defined")
+        if c1 == False: print("h_data_1 != defined")
+        if c11 == False: print("h_data_2 != defined")
+        if c2 == False: print("v_data_1 != defined")
+        if c3 == False: print("v_data_2 != defined")
         if c4 == False: print("h_data has no elements")
         if c41 == False: print("h_data_2 has no elements")
         if c5 == False: print("v_data_1 has no elements")
@@ -822,9 +822,9 @@ def plot_two_x_axis(hv_data, plt_args):
     # .png is the default matplotlib format
 
     try:
-        c1 = True if hv_data is not None else False
-        c2 = True if plt_args.crv_lab_list is not None else False        
-        c3 = True if plt_args.mrk_list is not None else False
+        c1 = True if hv_data != None else False
+        c2 = True if plt_args.crv_lab_list != None else False        
+        c3 = True if plt_args.mrk_list != None else False
         c4 = True if len(plt_args.crv_lab_list) == len(hv_data) else False
         c5 = True if len(plt_args.mrk_list) == len(hv_data) else False
         c6 = True if c1 and c2 and c3 and c4 and c5 else False
@@ -854,7 +854,7 @@ def plot_two_x_axis(hv_data, plt_args):
             # https://stackoverflow.com/questions/14711655/how-to-prevent-numbers-being-changed-to-exponential-form-in-python-matplotlib-fi
             
             if plt_args.plt_title != "": plt.title(plt_args.plt_title)
-            if plt_args.plt_range is not None: plt.axis( plt_args.plt_range )
+            if plt_args.plt_range != None: plt.axis( plt_args.plt_range )
 
             # Code needed to add second axis scale to frame
             #def forward(x):
@@ -918,9 +918,9 @@ def plot_multiple_curves(hv_data, plt_args):
     # .png is the default matplotlib format
 
     try:
-        c1 = True if hv_data is not None else False
-        c2 = True if plt_args.crv_lab_list is not None else False        
-        c3 = True if plt_args.mrk_list is not None else False
+        c1 = True if hv_data != None else False
+        c2 = True if plt_args.crv_lab_list != None else False        
+        c3 = True if plt_args.mrk_list != None else False
         c4 = True if len(plt_args.crv_lab_list) == len(hv_data) else False
         c5 = True if len(plt_args.mrk_list) == len(hv_data) else False
         c6 = True if c1 and c2 and c3 and c4 and c5 else False
@@ -954,9 +954,9 @@ def plot_multiple_curves(hv_data, plt_args):
             plt.ylabel(plt_args.y_label, fontsize = 14)
             
             # Add a LineCollection
-            if plt_args.add_line and plt_args.lcList is not None and plt_args.lcListColours is not None:
+            if plt_args.add_line and plt_args.lcList != None and plt_args.lcListColours != None:
                 from matplotlib.collections import LineCollection
-                lc = LineCollection(plt_args.lcList, color = plt_args.lcListColours, lw=2, linestyles = plt_args.lcListStyle if plt_args.lcListStyle is not None else 'solid')
+                lc = LineCollection(plt_args.lcList, color = plt_args.lcListColours, lw=2, linestyles = plt_args.lcListStyle if plt_args.lcListStyle != None else 'solid')
                 plt.gca().add_collection(lc)
 
             #if plt_args.log_y is False: plt.ticklabel_format(useOffset=False) # use this to turn off tick label scaling
@@ -965,7 +965,7 @@ def plot_multiple_curves(hv_data, plt_args):
             # https://stackoverflow.com/questions/14711655/how-to-prevent-numbers-being-changed-to-exponential-form-in-python-matplotlib-fi
             
             if plt_args.plt_title != "": plt.title(plt_args.plt_title)
-            if plt_args.plt_range is not None: plt.axis( plt_args.plt_range )
+            if plt_args.plt_range != None: plt.axis( plt_args.plt_range )
 
             # plot endmatter
             if plt_args.fig_name != "": plt.savefig(plt_args.fig_name)
@@ -997,9 +997,9 @@ def plot_multiple_curves_with_errors(hv_data, plt_args):
     # .png is the default matplotlib format
 
     try:
-        c1 = True if hv_data is not None else False
-        c2 = True if plt_args.crv_lab_list is not None else False        
-        c3 = True if plt_args.mrk_list is not None else False
+        c1 = True if hv_data != None else False
+        c2 = True if plt_args.crv_lab_list != None else False        
+        c3 = True if plt_args.mrk_list != None else False
         c4 = True if len(plt_args.crv_lab_list) == len(hv_data) else False
         c5 = True if len(plt_args.mrk_list) == len(hv_data) else False
         c6 = True if c1 and c2 and c3 and c4 and c5 else False
@@ -1037,9 +1037,9 @@ def plot_multiple_curves_with_errors(hv_data, plt_args):
             if plt_args.log_x: ax.set_xscale('log') 
             
             # Add a LineCollection
-            if plt_args.add_line and plt_args.lcList is not None and plt_args.lcListColours is not None:
+            if plt_args.add_line and plt_args.lcList != None and plt_args.lcListColours != None:
                 from matplotlib.collections import LineCollection
-                lc = LineCollection(plt_args.lcList, color = plt_args.lcListColours, lw=2, linestyles = plt_args.lcListStyle if plt_args.lcListStyle is not None else 'solid')
+                lc = LineCollection(plt_args.lcList, color = plt_args.lcListColours, lw=2, linestyles = plt_args.lcListStyle if plt_args.lcListStyle != None else 'solid')
                 plt.gca().add_collection(lc)
 
             plt.xlabel(plt_args.x_label, fontsize = 14)
@@ -1051,7 +1051,7 @@ def plot_multiple_curves_with_errors(hv_data, plt_args):
             # https://stackoverflow.com/questions/14711655/how-to-prevent-numbers-being-changed-to-exponential-form-in-python-matplotlib-fi
             
             if plt_args.plt_title != "": plt.title(plt_args.plt_title)
-            if plt_args.plt_range is not None: plt.axis( plt_args.plt_range )
+            if plt_args.plt_range != None: plt.axis( plt_args.plt_range )
 
             # plot endmatter
             if plt_args.fig_name != "": plt.savefig(plt_args.fig_name)
@@ -1083,9 +1083,9 @@ def plot_multiple_linear_fit_curves(hv_data, plt_args):
     # .png is the default matplotlib format
 
     try:
-        c1 = True if hv_data is not None else False
-        c2 = True if plt_args.crv_lab_list is not None else False        
-        #c3 = True if plt_args.mrk_list is not None else False
+        c1 = True if hv_data != None else False
+        c2 = True if plt_args.crv_lab_list != None else False        
+        #c3 = True if plt_args.mrk_list != None else False
         c4 = True if len(plt_args.crv_lab_list) == len(hv_data) else False
         #c5 = True if len(plt_args.mrk_list) == len(hv_data) else False # not using mrk_list in this function
         c6 = True if c1 and c2 and c4 else False
@@ -1105,7 +1105,7 @@ def plot_multiple_linear_fit_curves(hv_data, plt_args):
 
                 pars = Common.linear_fit(np.asarray(hv_data[k][0]), np.asarray(hv_data[k][1]), [0, 1]) # perform linear fit to the data set
 
-                if pars is not None:
+                if pars != None:
 
                     #print(plt_args.crv_lab_list[k]," , ",pars[0]," , ",pars[1])
 
@@ -1137,11 +1137,11 @@ def plot_multiple_linear_fit_curves(hv_data, plt_args):
             # https://stackoverflow.com/questions/14711655/how-to-prevent-numbers-being-changed-to-exponential-form-in-python-matplotlib-fi
             
             if plt_args.plt_title != "": plt.title(plt_args.plt_title)
-            if plt_args.plt_range is not None: plt.axis( plt_args.plt_range )
+            if plt_args.plt_range != None: plt.axis( plt_args.plt_range )
 
             # for more on yticks see 
             # https://matplotlib.org/api/pyplot_api.html?highlight=matplotlib%20pyplot%20yticks#matplotlib.pyplot.yticks
-            if plt_args.y_tck_vals is not None and plt_args.y_tck_labs is not None:
+            if plt_args.y_tck_vals != None and plt_args.y_tck_labs != None:
                 plt.yticks( plt_args.y_tck_vals, plt_args.y_tck_labs)
 
             # plot endmatter
