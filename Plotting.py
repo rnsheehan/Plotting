@@ -10,8 +10,10 @@ R. Sheehan 28 - 4 - 2017
 """
 
 # import pre-requisite modules
+from pickle import TRUE
 import numpy as np
 import matplotlib.pyplot as plt
+from pandas.core.base import NoNewAttributesMixin
 
 import Common
 
@@ -69,6 +71,8 @@ labs_line_only = ['k-', 'k--', 'k:', 'k-.'] # plot labels
 # https://matplotlib.org/3.5.3/gallery/shapes_and_collections/line_collection.html
 # https://matplotlib.org/stable/gallery/shapes_and_collections/line_collection.html
 # https://stackoverflow.com/questions/60266750/horizontal-lines-with-linecollection-in-matplotlib
+
+MOD_NAME_STR = 'Plotting'
 
 class plot_arguments(object):
     # this is the base class for the derived classes plot_arg_single and plot_arg_multiple
@@ -611,12 +615,15 @@ def plot_single_linear_fit_curve_with_errors(h_data, v_data, error, plt_args):
         if c8 == False: print("error and v_data have different lengths")
         print(e)
 
-def plot_histogram(the_data, plt_args):
+def plot_single_histogram(the_data, plt_args):
     # make a histogram plot of the_data
     # no. bins used is computed automatically, no normalisation is applied
     # plt_args is the set of arguments to be used in the plot
     # no data processing is performed inside the method
     # R. Sheehan 29 - 11 - 2021
+
+    FUNC_NAME = ".plot_single_histogram()" # use this in exception handling messages
+    ERR_STATEMENT = "Error: " + MOD_NAME_STR + FUNC_NAME
     
     try:
         c1 = True if the_data != None else False
@@ -638,8 +645,57 @@ def plot_histogram(the_data, plt_args):
         else:
             raise Exception
     except Exception as e:
-        print("\nError: Plotting.plot_histogram()")
+        print(ERR_STATEMENT)
         if c1 == False or c2 == False: print("the_data != defined")
+        print(e)
+
+def plot_multi_histogram(the_data, plt_args):
+
+    """
+    Plot multiple histograms together on the same plot
+    The data should be scaled for zero mean and unity std. dev. prior to plotting
+    No data formatting inside the plot methods!
+    """
+
+    FUNC_NAME = ".plot_multi_histogram()" # use this in exception handling messages
+    ERR_STATEMENT = "Error: " + MOD_NAME_STR + FUNC_NAME
+
+    try:
+        c1 = True if the_data != None else False
+        c2 = True if len(the_data) > 0 else False
+        c3 = True if plt_args.crv_lab_list != None else False
+        c10 = True if c1 and c2 and c3 else False
+
+        if c10:
+            # Use Sturges' Rule to compute the no. of bins required
+            #n_bins = int( 1.0 + 3.322*math.log( len(hv_data[0][1]) ) )
+
+            for i in range(0, len(the_data), 1):
+                plt.hist(the_data[i], bins = plt_args.bins, label = r'%(v1)s'%{"v1":plt_args.crv_lab_list[i]}, 
+                            alpha=0.9, color = colours[i], edgecolor = 'black', linestyle = '-')
+
+            if plt_args.plt_range != None: 
+                plt.xlim(xmin=plt_args.plt_range[0], xmax = plt_args.plt_range[1])
+                plt.ylim(ymin=plt_args.plt_range[2], ymax = plt_args.plt_range[3])
+            plt.xlabel(r'Scaled Measurements $( X_{i} - \mu ) / \sigma$', fontsize = 14)
+            plt.ylabel('Counts', fontsize = 14)
+            plt.legend(loc = 'best')
+            if plt_args.plt_title != None:
+                plt.title(r'%(v1)s'%{"v1":plt_args.plt_title})
+            if plt_args.fig_name != None:
+                plt.savefig(plt_args.fig_name)
+            if plt_args.loud == True:
+                plt.show()            
+            plt.clf()
+            plt.cla()
+            plt.close()
+        else:
+            if c1 == False or c2 == False: 
+                ERR_STATEMENT += "\nthe_data != defined"
+            if c3 == False: ERR_STATEMENT += "\nLabel list is empty"
+            raise Exception
+    except Exception as e:
+        print(ERR_STATEMENT)        
         print(e)
 
 def plot_two_y_axis_sameX(h_data, v_data_1, v_data_2, plt_args):
@@ -963,6 +1019,14 @@ def plot_multiple_curves(hv_data, plt_args):
             #ax.get_xaxis().get_major_formatter().set_scientific(False)
             # for more info on this see 
             # https://stackoverflow.com/questions/14711655/how-to-prevent-numbers-being-changed-to-exponential-form-in-python-matplotlib-fi
+
+            if plt_args.x_tck_vals != None and plt_args.x_tck_labs != None:
+                plt.xticks( plt_args.x_tck_vals, plt_args.x_tck_labs)
+
+            # for more on yticks see 
+            # https://matplotlib.org/api/pyplot_api.html?highlight=matplotlib%20pyplot%20yticks#matplotlib.pyplot.yticks
+            if plt_args.y_tck_vals != None and plt_args.y_tck_labs != None:
+                plt.yticks( plt_args.y_tck_vals, plt_args.y_tck_labs)
             
             if plt_args.plt_title != "": plt.title(plt_args.plt_title)
             if plt_args.plt_range != None: plt.axis( plt_args.plt_range )
