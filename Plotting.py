@@ -168,13 +168,18 @@ class plot_arg_multiple(plot_arguments):
             print("Type Error in plotting.plot_arguments(object) instantiation")
 
 def plot_single_curve(h_data, v_data, plt_args):
-    # plot a single data set with arguments supplied by plt_args
-    # h_data is a list of length N
-    # v_data is a list of length N
-    # plt_args is an object with multiple data members, see class plot_arguments(object)
+    """
+    plot a single data set with arguments supplied by plt_args
+    h_data is a list of length N
+    v_data is a list of length N
+    plt_args is an object with multiple data members, see class plot_arguments(object)
+    """
+    
     # R. Sheehan 3 - 4 - 2017
-
     # .png is the default matplotlib format
+
+    FUNC_NAME = ".plot_single_curve()" # use this in exception handling messages
+    ERR_STATEMENT = "Error: " + MOD_NAME_STR + FUNC_NAME
 
     try:
         c1 = True if h_data != None else False
@@ -237,21 +242,26 @@ def plot_single_curve(h_data, v_data, plt_args):
             plt.cla()
             plt.close()
         else:
+            if c1 == False: ERR_STATEMENT += "\nh_data != defined"
+            if c2 == False: ERR_STATEMENT += "\nv_data != defined"
+            if c3 == False: ERR_STATEMENT += "\nh_data has no elements"
+            if c4 == False: ERR_STATEMENT += "\nv_data has no elements"
+            if c5 == False: ERR_STATEMENT += "\nh_data and v_data have different lengths"
             raise Exception
     except Exception as e:
-        print("\nError: Plotting.plot_single_curve()")
-        if c1 == False: print("h_data != defined")
-        if c2 == False: print("v_data != defined")
-        if c3 == False: print("h_data has no elements")
-        if c4 == False: print("v_data has no elements")
-        if c5 == False: print("h_data and v_data have different lengths")
+        print(ERR_STATEMENT)
         print(e)
 
 def plot_single_semilogx(h_data, v_data, plt_args):
+    """
+    Generate a semilog plot of the data (h_data, y_data)
+    where the x-axis is logarithmic
+    """
 
-    # Generate a semilog plot of the data (h_data, y_data)
-    # where the x-axis is logarithmic
     # R. Sheehan 3 - 3 - 2022
+
+    FUNC_NAME = ".plot_single_semilogx()" # use this in exception handling messages
+    ERR_STATEMENT = "Error: " + MOD_NAME_STR + FUNC_NAME
 
     try:
         c1 = True if h_data != None else False
@@ -289,27 +299,32 @@ def plot_single_semilogx(h_data, v_data, plt_args):
             plt.cla()
             plt.close()
         else:
+            if c1 == False: ERR_STATEMENT += "\nh_data != defined"
+            if c2 == False: ERR_STATEMENT += "\nv_data != defined"
+            if c3 == False: ERR_STATEMENT += "\nh_data has no elements"
+            if c4 == False: ERR_STATEMENT += "\nv_data has no elements"
+            if c5 == False: ERR_STATEMENT += "\nh_data and v_data have different lengths"
             raise Exception
     except Exception as e:
-        print("\nError: Plotting.plot_single_semilogx()")
-        if c1 == False: print("h_data != defined")
-        if c2 == False: print("v_data != defined")
-        if c3 == False: print("h_data has no elements")
-        if c4 == False: print("v_data has no elements")
-        if c5 == False: print("h_data and v_data have different lengths")
+        print(ERR_STATEMENT)
         print(e)
 
 def log_plot_error_bars(data, error):
-    # pass data using np.asarray(.)
-    # use this function to determine the error bars associated with a log plot
-    # matplotlib cannot have negative values on error bar plots with log scale
-    # so need to replace any negative error bar values with some minimum value
+    """
+    pass data using np.asarray(.)
+    use this function to determine the error bars associated with a log plot
+    matplotlib cannot have negative values on error bar plots with log scale
+    so need to replace any negative error bar values with some minimum value
+    """
     # R. Sheehan 13 - 11 - 2017
+
+    FUNC_NAME = ".log_plot_error_bars()" # use this in exception handling messages
+    ERR_STATEMENT = "Error: " + MOD_NAME_STR + FUNC_NAME
 
     try:
         if Common.list_has_negative(data) or Common.list_has_negative(error):
             # data or error contains a negative value and as such cannot be used for a log-plot
-            print("Data set has negative values")
+            ERR_STATEMENT += "\nData set has negative values"
             raise Exception
         else:
             min_data_val = 0.5*min(data)
@@ -318,15 +333,17 @@ def log_plot_error_bars(data, error):
             yerr_high = data + 0.5*error
             return [yerr_low, yerr_high]
     except Exception as e:
-        print("Error: Plotting.log_plot_error_bars()")
+        print(ERR_STATEMENT)
         print(e)
 
 def plot_single_curve_with_errors(h_data, v_data, error, plt_args):
-    # plot a single data set with arguments supplied by plt_args
-    # h_data is a list of length N
-    # v_data is a list of length N
-    # error is the difference between max and min values averaged about v_data, must have length N
-    # plt_args is an object with multiple data members, see class plot_arg_single(plot_arguments)
+    """
+    plot a single data set with arguments supplied by plt_args
+    h_data is a list of length N
+    v_data is a list of length N
+    error is the difference between max and min values averaged about v_data, must have length N
+    plt_args is an object with multiple data members, see class plot_arg_single(plot_arguments)
+    """
 
     # matplotlib errorbar plot documentation
     #https://matplotlib.org/api/_as_gen/matplotlib.axes.Axes.errorbar.html
@@ -337,6 +354,9 @@ def plot_single_curve_with_errors(h_data, v_data, error, plt_args):
     # R. Sheehan 9 - 11 - 2017
 
     # .png is the default matplotlib format
+
+    FUNC_NAME = ".plot_single_curve_with_errors()" # use this in exception handling messages
+    ERR_STATEMENT = "Error: " + MOD_NAME_STR + FUNC_NAME
 
     try:
         c1 = True if h_data != None else False
@@ -421,26 +441,32 @@ def plot_single_curve_with_errors(h_data, v_data, error, plt_args):
             plt.cla()
             plt.close()
         else:
+            if c1 == False: ERR_STATEMENT += "\nh_data != defined"
+            if c2 == False: ERR_STATEMENT += "\nv_data != defined"
+            if c3 == False: ERR_STATEMENT += "\nh_data has no elements"
+            if c4 == False: ERR_STATEMENT += "\nv_data has no elements"
+            if c5 == False: ERR_STATEMENT += "\nh_data and v_data have different lengths"
+            if c7 == False: ERR_STATEMENT += "\ne_low has no elements"
+            if c8 == False: ERR_STATEMENT += "\nerror and v_data have different lengths"
             raise Exception
     except Exception as e:
-        print("\nError: Plotting.plot_single_curve_with_errors()")
-        if c1 == False: print("h_data != defined")
-        if c2 == False: print("v_data != defined")
-        if c3 == False: print("h_data has no elements")
-        if c4 == False: print("v_data has no elements")
-        if c5 == False: print("h_data and v_data have different lengths")
-        if c7 == False: print("e_low has no elements")
-        if c8 == False: print("error and v_data have different lengths")
+        print(ERR_STATEMENT)
         print(e)
 
 def plot_single_linear_fit_curve(h_data, v_data, plt_args):
-    # plot a linear fit on the single data set with arguments supplied by plt_args
-    # h_data is a list of length N
-    # v_data is a list of length N
-    # plt_args is an object with multiple data members, see class plot_arguments(object)
+    """
+    plot a linear fit on the single data set with arguments supplied by plt_args
+    h_data is a list of length N
+    v_data is a list of length N
+    plt_args is an object with multiple data members, see class plot_arguments(object)
+    """
+
     # R. Sheehan 26 - 9 - 2017
 
     # .png is the default matplotlib format
+
+    FUNC_NAME = ".plot_single_linear_fit_curve()" # use this in exception handling messages
+    ERR_STATEMENT = "Error: " + MOD_NAME_STR + FUNC_NAME
 
     try:
         c1 = True if h_data != None else False
@@ -499,25 +525,27 @@ def plot_single_linear_fit_curve(h_data, v_data, plt_args):
                 plt.cla()
                 plt.close()
             else:
+                if c1 == False: ERR_STATEMENT += "\nh_data != defined"
+                if c2 == False: ERR_STATEMENT += "\nv_data != defined"
+                if c3 == False: ERR_STATEMENT += "\nh_data has no elements"
+                if c4 == False: ERR_STATEMENT += "\nv_data has no elements"
+                if c5 == False: ERR_STATEMENT += "\nh_data and v_data have different lengths"
                 raise Exception
         else:
             raise Exception
     except Exception as e:
-        print("\nError: Plotting.plot_single_linear_fit_curve()")
-        if c1 == False: print("h_data != defined")
-        if c2 == False: print("v_data != defined")
-        if c3 == False: print("h_data has no elements")
-        if c4 == False: print("v_data has no elements")
-        if c5 == False: print("h_data and v_data have different lengths")
+        print(ERR_STATEMENT)
         print(e)
 
 def plot_single_linear_fit_curve_with_errors(h_data, v_data, error, plt_args):
-    # plot a single data set with arguments supplied by plt_args
-    # h_data is a list of length N
-    # v_data is a list of length N
-    # error is the difference between max and min values averaged about v_data, must have length N
-    # a linear fit is made to the data set and included in the plot
-    # plt_args is an object with multiple data members, see class plot_arg_single(plot_arguments)
+    """
+    plot a single data set with arguments supplied by plt_args
+    h_data is a list of length N
+    v_data is a list of length N
+    error is the difference between max and min values averaged about v_data, must have length N
+    a linear fit is made to the data set and included in the plot
+    plt_args is an object with multiple data members, see class plot_arg_single(plot_arguments)
+    """
 
     # matplotlib errorbar plot documentation
     #https://matplotlib.org/api/_as_gen/matplotlib.axes.Axes.errorbar.html
@@ -528,6 +556,9 @@ def plot_single_linear_fit_curve_with_errors(h_data, v_data, error, plt_args):
     # R. Sheehan 9 - 11 - 2017
 
     # .png is the default matplotlib format
+
+    FUNC_NAME = ".plot_single_linear_fit_curve_with_errors()" # use this in exception handling messages
+    ERR_STATEMENT = "Error: " + MOD_NAME_STR + FUNC_NAME
 
     try:
         c1 = True if h_data != None else False
@@ -603,16 +634,16 @@ def plot_single_linear_fit_curve_with_errors(h_data, v_data, error, plt_args):
             plt.cla()
             plt.close()
         else:
+            if c1 == False: ERR_STATEMENT += "\nh_data != defined"
+            if c2 == False: ERR_STATEMENT += "\nv_data != defined"
+            if c3 == False: ERR_STATEMENT += "\nh_data has no elements"
+            if c4 == False: ERR_STATEMENT += "\nv_data has no elements"
+            if c5 == False: ERR_STATEMENT += "\nh_data and v_data have different lengths"
+            if c7 == False: ERR_STATEMENT += "\ne_low has no elements"
+            if c8 == False: ERR_STATEMENT += "\nerror and v_data have different lengths"
             raise Exception
     except Exception as e:
-        print("\nError: Plotting.plot_single_curve_with_errors()")
-        if c1 == False: print("h_data != defined")
-        if c2 == False: print("v_data != defined")
-        if c3 == False: print("h_data has no elements")
-        if c4 == False: print("v_data has no elements")
-        if c5 == False: print("h_data and v_data have different lengths")
-        if c7 == False: print("e_low has no elements")
-        if c8 == False: print("error and v_data have different lengths")
+        print(ERR_STATEMENT)
         print(e)
 
 def plot_single_histogram(the_data, plt_args):
@@ -643,10 +674,10 @@ def plot_single_histogram(the_data, plt_args):
             plt.cla()
             plt.close()
         else:
+            if c1 == False or c2 == False: ERR_STATEMENT += "\nthe_data != defined"
             raise Exception
     except Exception as e:
         print(ERR_STATEMENT)
-        if c1 == False or c2 == False: print("the_data != defined")
         print(e)
 
 def plot_multi_histogram(the_data, plt_args):
@@ -699,9 +730,11 @@ def plot_multi_histogram(the_data, plt_args):
         print(e)
 
 def plot_two_y_axis_sameX(h_data, v_data_1, v_data_2, plt_args):
-    
-    # Make a plot that includes two y_axes
-    # For notes on this type of plot see https://matplotlib.org/gallery/api/two_scales.html
+    """
+    Make a plot that includes two y_axes
+    For notes on this type of plot see https://matplotlib.org/gallery/api/two_scales.html
+    """
+
     # R. Sheehan 4 - 10 - 2019
     
     # To make a plot with two x-axes see
@@ -710,6 +743,9 @@ def plot_two_y_axis_sameX(h_data, v_data_1, v_data_2, plt_args):
     
     # Rename the method because python does not like name overloading
     # R. Sheehan 2 - 9 - 2025
+
+    FUNC_NAME = ".plot_two_y_axis_sameX()" # use this in exception handling messages
+    ERR_STATEMENT = "Error: " + MOD_NAME_STR + FUNC_NAME
 
     try:
         c1 = True if h_data != None else False
@@ -761,22 +797,24 @@ def plot_two_y_axis_sameX(h_data, v_data_1, v_data_2, plt_args):
             plt.cla()
             plt.close()
         else:
+            if c1 == False: ERR_STATEMENT += "\nh_data != defined"
+            if c2 == False: ERR_STATEMENT += "\nv_data_1 != defined"
+            if c3 == False: ERR_STATEMENT += "\nv_data_2 != defined"
+            if c4 == False: ERR_STATEMENT += "\nh_data has no elements"
+            if c5 == False: ERR_STATEMENT += "\nv_data_1 has no elements"
+            if c6 == False: ERR_STATEMENT += "\nv_data_2 has no elements"
+            if c7 == False or c8 == False: ERR_STATEMENT += "\nh_data and v_data have different lengths"
             raise Exception
     except Exception as e:
-        print("\nError: Plotting.plot_two_axis()")
-        if c1 == False: print("h_data != defined")
-        if c2 == False: print("v_data_1 != defined")
-        if c3 == False: print("v_data_2 != defined")
-        if c4 == False: print("h_data has no elements")
-        if c5 == False: print("v_data_1 has no elements")
-        if c6 == False: print("v_data_2 has no elements")
-        if c7 == False or c8 == False: print("h_data and v_data have different lengths")
+        print(ERR_STATEMENT)
+        
         print(e)
         
 def plot_two_y_axis_diffX(h_data_1, v_data_1, h_data_2, v_data_2, plt_args):
-    
-    # Make a plot that includes two y_axes
-    # For notes on this type of plot see https://matplotlib.org/gallery/api/two_scales.html
+    """
+    Make a plot that includes two y_axes
+    For notes on this type of plot see https://matplotlib.org/gallery/api/two_scales.html
+    """
     # R. Sheehan 4 - 10 - 2019
     
     # To make a plot with two x-axes see
@@ -788,6 +826,9 @@ def plot_two_y_axis_diffX(h_data_1, v_data_1, h_data_2, v_data_2, plt_args):
     
     # Must give this a different name as Python doesn't like overloading
     # R. Sheehan 22 - 8 - 2025
+
+    FUNC_NAME = ".plot_two_y_axis_diffX()" # use this in exception handling messages
+    ERR_STATEMENT = "Error: " + MOD_NAME_STR + FUNC_NAME
 
     try:
         c1 = True if h_data_1 != None else False
@@ -841,41 +882,46 @@ def plot_two_y_axis_diffX(h_data_1, v_data_1, h_data_2, v_data_2, plt_args):
             plt.cla()
             plt.close()
         else:
+            if c1 == False: ERR_STATEMENT += "\nh_data != defined"
+            if c11 == False: ERR_STATEMENT += "\nh_data_2 != defined"
+            if c2 == False: ERR_STATEMENT += "\nv_data_1 != defined"
+            if c3 == False: ERR_STATEMENT += "\nv_data_2 != defined"
+            if c4 == False: ERR_STATEMENT += "\nh_data has no elements"
+            if c41 == False: ERR_STATEMENT += "\nh_data_2 has no elements"
+            if c5 == False: ERR_STATEMENT += "\nv_data_1 has no elements"
+            if c6 == False: ERR_STATEMENT += "\nv_data_2 has no elements"
+            if c7 == False or c8 == False: ERR_STATEMENT += "\nh_data and v_data have different lengths"
             raise Exception
     except Exception as e:
-        print("\nError: Plotting.plot_two_axis()")
-        if c1 == False: print("h_data_1 != defined")
-        if c11 == False: print("h_data_2 != defined")
-        if c2 == False: print("v_data_1 != defined")
-        if c3 == False: print("v_data_2 != defined")
-        if c4 == False: print("h_data has no elements")
-        if c41 == False: print("h_data_2 has no elements")
-        if c5 == False: print("v_data_1 has no elements")
-        if c6 == False: print("v_data_2 has no elements")
-        if c7 == False or c8 == False: print("h_data and v_data have different lengths")
+        print(ERR_STATEMENT)
         print(e)
 
 def plot_two_x_axis(hv_data, plt_args):
+    """
+    generate a plot with two different x-axis scales
+    https://matplotlib.org/stable/gallery/subplots_axes_and_figures/secondary_axis.html
+    this is the standard plot_multiple_curves with a second x-axis added on top of the frame
+    also I've removed the ability to do loglog plots, only plot log along y for simplicity
+    
+    this works as long as the mapping from one scale to another is linear
+    otherwise it does not work as well as you'd like
 
-    # generate a plot with two different x-axis scales
-    # https://matplotlib.org/stable/gallery/subplots_axes_and_figures/secondary_axis.html
-    # this is the standard plot_multiple_curves with a second x-axis added on top of the frame
-    # also I've removed the ability to do loglog plots, only plot log along y for simplicity
+    generate plot that contains multiple curves on the same axis
+    It is assumed that each data set shares the same horizontal coordinates
+    hv_data is a 2D array of size M*N
+    data is stored row-wise in => data is accesed by subscript operation on hv_data
+    M is the number of curves to be plotted
+    N is the number of data points in each set
+    plt_args is an object that contains multiple data members, see class plot_arguments(object)
+    It is assumed that plt_args.crv_lab_list and plt_args.mrk_list[k] are not empty
+    """
+
     # R. Sheehan 25 - 1 - 2024
 
-    # this works as long as the mapping from one scale to another is linear
-    # otherwise it does not work as well as you'd like
-
-    # generate plot that contains multiple curves on the same axis
-    # It is assumed that each data set shares the same horizontal coordinates
-    # hv_data is a 2D array of size M*N
-    # data is stored row-wise in => data is accesed by subscript operation on hv_data
-    # M is the number of curves to be plotted
-    # N is the number of data points in each set
-    # plt_args is an object that contains multiple data members, see class plot_arguments(object)
-    # It is assumed that plt_args.crv_lab_list and plt_args.mrk_list[k] are not empty
-
     # .png is the default matplotlib format
+
+    FUNC_NAME = ".plot_two_x_axis()" # use this in exception handling messages
+    ERR_STATEMENT = "Error: " + MOD_NAME_STR + FUNC_NAME
 
     try:
         c1 = True if hv_data != None else False
@@ -943,25 +989,27 @@ def plot_two_x_axis(hv_data, plt_args):
             plt.cla()
             plt.close()
         else:
+            if c1 == False: ERR_STATEMENT += "\nhv_data has not been assigned correctly"
+            if c2 == False: ERR_STATEMENT += "\nplt_args.crv_lab_list has not been assigned correctly"
+            if c3 == False: ERR_STATEMENT += "\nplt_args.mrk_list has not been assigned correctly"
+            if c4 == False: ERR_STATEMENT += "\nhv_data and plt_args.crv_lab_list have differing numbers of elements"
+            if c5 == False: ERR_STATEMENT += "\nhv_data and plt_args.mrk_list have differing numbers of elements"
             raise Exception
     except Exception as e:
-        print("Error: Plotting.plot_multiple_curves()")
-        if c1 == False: print("hv_data has not been assigned correctly")
-        if c2 == False: print("plt_args.crv_lab_list has not been assigned correctly")
-        if c3 == False: print("plt_args.mrk_list has not been assigned correctly")
-        if c4 == False: print("hv_data and plt_args.crv_lab_list have differing numbers of elements")
-        if c5 == False: print("hv_data and plt_args.mrk_list have differing numbers of elements")
+        print(ERR_STATEMENT)
         print(e)
 
 def plot_multiple_curves(hv_data, plt_args):
-    # generate plot that contains multiple curves on the same axis
-    # It is assumed that each data set shares the same horizontal coordinates
-    # hv_data is a 2D array of size M*N
-    # data is stored row-wise in => data is accesed by subscript operation on hv_data
-    # M is the number of curves to be plotted
-    # N is the number of data points in each set
-    # plt_args is an object that contains multiple data members, see class plot_arguments(object)
-    # It is assumed that plt_args.crv_lab_list and plt_args.mrk_list[k] are not empty
+    """
+    generate plot that contains multiple curves on the same axis
+    It is assumed that each data set shares the same horizontal coordinates
+    hv_data is a 2D array of size M*N
+    data is stored row-wise in => data is accesed by subscript operation on hv_data
+    M is the number of curves to be plotted
+    N is the number of data points in each set
+    plt_args is an object that contains multiple data members, see class plot_arguments(object)
+    It is assumed that plt_args.crv_lab_list and plt_args.mrk_list[k] are not empty
+    """
 
     # I would like a method which could have multiple curves but only want a small number of the curves are to have a legend
     # Assume that the last k < M curves in hv_data are to have a legend label
@@ -969,9 +1017,13 @@ def plot_multiple_curves(hv_data, plt_args):
     # https://matplotlib.org/stable/gallery/text_labels_and_annotations/legend_demo.html#sphx-glr-gallery-text-labels-and-annotations-legend-demo-py
     # I don't think I can do this in a generic manner because the legend wants you to save the lines as elements of a tuple
     # Don't know how to do this when you don't know the size of the tuple in advance
+    
     # Updated R. Sheehan 25 - 1 - 2024
 
     # .png is the default matplotlib format
+
+    FUNC_NAME = ".plot_multiple_curves()" # use this in exception handling messages
+    ERR_STATEMENT = "Error: " + MOD_NAME_STR + FUNC_NAME
 
     try:
         c1 = True if hv_data != None else False
@@ -1038,14 +1090,14 @@ def plot_multiple_curves(hv_data, plt_args):
             plt.cla()
             plt.close()
         else:
+            if c1 == False: ERR_STATEMENT += "\nhv_data has not been assigned correctly"
+            if c2 == False: ERR_STATEMENT += "\nplt_args.crv_lab_list has not been assigned correctly"
+            if c3 == False: ERR_STATEMENT += "\nplt_args.mrk_list has not been assigned correctly"
+            if c4 == False: ERR_STATEMENT += "\nhv_data and plt_args.crv_lab_list have differing numbers of elements"
+            if c5 == False: ERR_STATEMENT += "\nhv_data and plt_args.mrk_list have differing numbers of elements"
             raise Exception
     except Exception as e:
-        print("Error: Plotting.plot_multiple_curves()")
-        if c1 == False: print("hv_data has not been assigned correctly")
-        if c2 == False: print("plt_args.crv_lab_list has not been assigned correctly")
-        if c3 == False: print("plt_args.mrk_list has not been assigned correctly")
-        if c4 == False: print("hv_data and plt_args.crv_lab_list have differing numbers of elements")
-        if c5 == False: print("hv_data and plt_args.mrk_list have differing numbers of elements")
+        print(ERR_STATEMENT)
         print(e)
 
 def plot_multiple_curves_with_errors(hv_data, plt_args):
@@ -1124,14 +1176,14 @@ def plot_multiple_curves_with_errors(hv_data, plt_args):
             plt.cla()
             plt.close()
         else:
+            if c1 == False: ERR_STATEMENT += "\nhv_data has not been assigned correctly"
+            if c2 == False: ERR_STATEMENT += "\nplt_args.crv_lab_list has not been assigned correctly"
+            if c3 == False: ERR_STATEMENT += "\nplt_args.mrk_list has not been assigned correctly"
+            if c4 == False: ERR_STATEMENT += "\nhv_data and plt_args.crv_lab_list have differing numbers of elements"
+            if c5 == False: ERR_STATEMENT += "\nhv_data and plt_args.mrk_list have differing numbers of elements"
             raise Exception
     except Exception as e:
-        print("Error: Plotting.plot_multiple_curves()")
-        if c1 == False: print("hv_data has not been assigned correctly")
-        if c2 == False: print("plt_args.crv_lab_list has not been assigned correctly")
-        if c3 == False: print("plt_args.mrk_list has not been assigned correctly")
-        if c4 == False: print("hv_data and plt_args.crv_lab_list have differing numbers of elements")
-        if c5 == False: print("hv_data and plt_args.mrk_list have differing numbers of elements")
+        print(ERR_STATEMENT)
         print(e)
 
 def plot_multiple_linear_fit_curves(hv_data, plt_args):
@@ -1215,12 +1267,12 @@ def plot_multiple_linear_fit_curves(hv_data, plt_args):
             plt.cla()
             plt.close()
         else:
+            if c1 == False: ERR_STATEMENT += "\nhv_data has not been assigned correctly"
+            if c2 == False: ERR_STATEMENT += "\nplt_args.crv_lab_list has not been assigned correctly"
+            #if c3 == False: ERR_STATEMENT += "\nplt_args.mrk_list has not been assigned correctly"
+            if c4 == False: ERR_STATEMENT += "\nhv_data and plt_args.crv_lab_list have differing numbers of elements"
+            #if c5 == False: ERR_STATEMENT += "\nhv_data and plt_args.mrk_list have differing numbers of elements"
             raise Exception
     except Exception as e:
-        print("Error: Plotting.plot_multiple_linear_fit_curves()")
-        if c1 == False: print("hv_data has not been assigned correctly")
-        if c2 == False: print("plt_args.crv_lab_list has not been assigned correctly")
-        #if c3 == False: print("plt_args.mrk_list has not been assigned correctly")
-        if c4 == False: print("hv_data and plt_args.crv_lab_list have differing numbers of elements")
-        #if c5 == False: print("hv_data and plt_args.mrk_list have differing numbers of elements")
+        print(ERR_STATEMENT)
         print(e)
