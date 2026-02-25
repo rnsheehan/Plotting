@@ -704,7 +704,7 @@ def plot_multi_histogram(the_data, plt_args):
 
             for i in range(0, len(the_data), 1):
                 plt.hist(the_data[i], bins = plt_args.bins, label = r'%(v1)s'%{"v1":plt_args.crv_lab_list[i]}, 
-                            alpha=0.9, color = colours[i], edgecolor = 'black', linestyle = '-')
+                            alpha=0.5, color = colours[i], edgecolor = 'black', linestyle = '-')
 
             if plt_args.plt_range != None: 
                 plt.xlim(xmin=plt_args.plt_range[0], xmax = plt_args.plt_range[1])
