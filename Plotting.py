@@ -475,9 +475,9 @@ def plot_single_linear_fit_curve(h_data, v_data, plt_args):
         c3 = True if len(h_data) > 0 else False
         c4 = True if len(v_data) > 0 else False
         c5 = True if len(h_data) == len(v_data) else False
-        c6 = c3 and c4 and c5
+        c10 = c3 and c4 and c5
 
-        if c6:
+        if c10:
             # make the linear fit
             h_data, v_data = Common.sort_two_col(np.asarray(h_data), np.asarray(v_data))  
             pars = Common.linear_fit(np.asarray(h_data), np.asarray(v_data), [0, 1])
@@ -562,16 +562,16 @@ def plot_single_linear_fit_curve_with_errors(h_data, v_data, error, plt_args):
     ERR_STATEMENT = "Error: " + MOD_NAME_STR + FUNC_NAME
 
     try:
-        c1 = True if h_data != None else False
-        c2 = True if v_data != None else False
+        #c1 = True if h_data != None else False
+        #c2 = True if v_data != None else False
         c3 = True if len(h_data) > 0 else False
         c4 = True if len(v_data) > 0 else False
         c5 = True if len(h_data) == len(v_data) else False
         c7 = True if len(error) > 0 else False
         c8 = True if len(error) == len(v_data) else False
-        c6 = True if c1 and c2 and c3 and c4 and c5 and c7 and c8 else False       
+        c10 = c3 and c4 and c5 and c7 and c8
 
-        if c6:
+        if c10:
                        
             #if plt_args.log_y == True:
             #    if Common.list_has_negative(v_data):
@@ -635,8 +635,8 @@ def plot_single_linear_fit_curve_with_errors(h_data, v_data, error, plt_args):
             plt.cla()
             plt.close()
         else:
-            if c1 == False: ERR_STATEMENT += "\nh_data != defined"
-            if c2 == False: ERR_STATEMENT += "\nv_data != defined"
+            #if c1 == False: ERR_STATEMENT += "\nh_data != defined"
+            #if c2 == False: ERR_STATEMENT += "\nv_data != defined"
             if c3 == False: ERR_STATEMENT += "\nh_data has no elements"
             if c4 == False: ERR_STATEMENT += "\nv_data has no elements"
             if c5 == False: ERR_STATEMENT += "\nh_data and v_data have different lengths"
