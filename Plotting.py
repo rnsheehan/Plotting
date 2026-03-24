@@ -717,8 +717,7 @@ def plot_multi_histogram(the_data, plt_args):
             #n_bins = int( 1.0 + 3.322*math.log( len(hv_data[0][1]) ) )
 
             for i in range(0, len(the_data), 1):
-                plt.hist(the_data[i], bins = plt_args.bins, label = r'%(v1)s'%{"v1":plt_args.crv_lab_list[i]}, cumulative=plt_args.cdf, 
-                            alpha=0.5, color = colours[i], edgecolor = 'black', linestyle = '-')
+                plt.hist(the_data[i], bins = plt_args.bins, label = r'%(v1)s'%{"v1":plt_args.crv_lab_list[i]}, cumulative=plt_args.cdf, density = plt_args.normed, alpha=0.5, color = colours[i], edgecolor = 'black', linestyle = '-')
 
             if plt_args.plt_range != None: 
                 plt.xlim(xmin=plt_args.plt_range[0], xmax = plt_args.plt_range[1])
@@ -727,7 +726,7 @@ def plot_multi_histogram(the_data, plt_args):
             plt.xlabel(r'%(v1)s'%{"v1":plt_args.x_label}, fontsize = 14)
 
             if plt_args.cdf:
-                hist_y_label = 'Cumlative Probability Density' if plt_args.normed else 'Cumulative Frequency Count'
+                hist_y_label = 'Cumulative Probability Density' if plt_args.normed else 'Cumulative Frequency Count'
             else:
                 hist_y_label = 'Probability Density' if plt_args.normed else 'Frequency Count'
             plt.ylabel(hist_y_label, fontsize = 14)
