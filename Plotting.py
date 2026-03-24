@@ -114,6 +114,7 @@ class plot_arguments(object):
             # histograms
             self.bins = None # default value for no. of bins in a histogram
             self.cdf = False # plot a CDF of the data? 
+            self.normed = False # plot the normalised CDF
         
             # Use matplotlib LineCollections to add lines to a plot after the fact
             # Could also use hline and vline but this is more general
@@ -659,15 +660,16 @@ def plot_single_histogram(the_data, plt_args):
     ERR_STATEMENT = "Error: " + MOD_NAME_STR + FUNC_NAME
     
     try:
-        c1 = True if the_data != None else False
+        #c1 = True if the_data != None else False
         c2 = True if len(the_data) > 0 else False
-        c10 = True if c1 and c2 else False   
+        c10 = c2
 
         if c10:
-            plt.hist(the_data, bins = plt_args.bins )
+            plt.hist(the_data, bins = plt_args.bins, label = plt_args.curve_label, cumulative=plt_args.cdf, density = plt_args.normed, edgecolor = 'black', linestyle = '-')
             plt.xlabel(plt_args.x_label, fontsize = 14)
             plt.ylabel(plt_args.y_label, fontsize = 14)
 
+            plt.legend(loc = 'best')
             if plt_args.plt_title != "": plt.title(plt_args.plt_title)            
             if plt_args.fig_name != "": plt.savefig(plt_args.fig_name)
             if plt_args.loud: plt.show()
@@ -676,7 +678,7 @@ def plot_single_histogram(the_data, plt_args):
             plt.cla()
             plt.close()
         else:
-            if c1 == False or c2 == False: ERR_STATEMENT += "\nthe_data != defined"
+            if c2 == False: ERR_STATEMENT += "\nthe_data != defined"
             raise Exception
     except Exception as e:
         print(ERR_STATEMENT)
