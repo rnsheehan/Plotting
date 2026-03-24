@@ -666,10 +666,21 @@ def plot_single_histogram(the_data, plt_args):
 
         if c10:
             plt.hist(the_data, bins = plt_args.bins, label = plt_args.curve_label, cumulative=plt_args.cdf, density = plt_args.normed, edgecolor = 'black', linestyle = '-')
-            plt.xlabel(plt_args.x_label, fontsize = 14)
-            plt.ylabel(plt_args.y_label, fontsize = 14)
+            
+            if plt_args.plt_range != None: 
+                plt.xlim(xmin=plt_args.plt_range[0], xmax = plt_args.plt_range[1])
+                plt.ylim(ymin=plt_args.plt_range[2], ymax = plt_args.plt_range[3])
+
+            plt.xlabel(r'%(v1)s'%{"v1":plt_args.x_label}, fontsize = 14)
+            
+            if plt_args.cdf:
+                hist_y_label = 'Cumlative Probability Density' if plt_args.normed else 'Cumulative Frequency Count'
+            else:
+                hist_y_label = 'Probability Density' if plt_args.normed else 'Frequency Count'
+            plt.ylabel(hist_y_label, fontsize = 14)
 
             plt.legend(loc = 'best')
+
             if plt_args.plt_title != "": plt.title(plt_args.plt_title)            
             if plt_args.fig_name != "": plt.savefig(plt_args.fig_name)
             if plt_args.loud: plt.show()
@@ -712,15 +723,21 @@ def plot_multi_histogram(the_data, plt_args):
             if plt_args.plt_range != None: 
                 plt.xlim(xmin=plt_args.plt_range[0], xmax = plt_args.plt_range[1])
                 plt.ylim(ymin=plt_args.plt_range[2], ymax = plt_args.plt_range[3])
-            plt.xlabel(r'Scaled Measurements $( X_{i} - \mu ) / \sigma$', fontsize = 14)
-            plt.ylabel('Counts', fontsize = 14)
+
+            plt.xlabel(r'%(v1)s'%{"v1":plt_args.x_label}, fontsize = 14)
+
+            if plt_args.cdf:
+                hist_y_label = 'Cumlative Probability Density' if plt_args.normed else 'Cumulative Frequency Count'
+            else:
+                hist_y_label = 'Probability Density' if plt_args.normed else 'Frequency Count'
+            plt.ylabel(hist_y_label, fontsize = 14)
+
             plt.legend(loc = 'best')
-            if plt_args.plt_title != None:
-                plt.title(r'%(v1)s'%{"v1":plt_args.plt_title})
-            if plt_args.fig_name != None:
-                plt.savefig(plt_args.fig_name)
-            if plt_args.loud == True:
-                plt.show()            
+
+            if plt_args.plt_title != "": plt.title(plt_args.plt_title)            
+            if plt_args.fig_name != "": plt.savefig(plt_args.fig_name)
+            if plt_args.loud: plt.show()
+            
             plt.clf()
             plt.cla()
             plt.close()
