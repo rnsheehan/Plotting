@@ -707,10 +707,10 @@ def plot_multi_histogram(the_data, plt_args):
     ERR_STATEMENT = "Error: " + MOD_NAME_STR + FUNC_NAME
 
     try:
-        c1 = True if the_data != None else False
+        #c1 = True if the_data != None else False
         c2 = True if len(the_data) > 0 else False
         c3 = True if plt_args.crv_lab_list != None else False
-        c10 = True if c1 and c2 and c3 else False
+        c10 = c2 and c3
 
         if c10:
             # Use Sturges' Rule to compute the no. of bins required
@@ -741,7 +741,7 @@ def plot_multi_histogram(the_data, plt_args):
             plt.cla()
             plt.close()
         else:
-            if c1 == False or c2 == False: 
+            if c2 == False: 
                 ERR_STATEMENT += "\nthe_data != defined"
             if c3 == False: ERR_STATEMENT += "\nLabel list is empty"
             raise Exception
